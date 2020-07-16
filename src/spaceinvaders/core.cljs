@@ -19,17 +19,17 @@
 ;; constants
 
 ; canvas
-(def world-height 500)
-(def world-width 500)
+(def world-height 600)
+(def world-width 800)
 
 ; ufos
 (def vu 3)
-(def size-ufo 40)
+(def size-ufo 42)
 (def size-ufo2 (/ size-ufo 2))
 (def max-ufos 7) ; max # of ufos allowed at once per frame
 
 ; tank
-(def wt 40)
+(def wt 42)
 (def wt2 (/ wt 2))
 (def ht (* 0.4 wt))
 (def yt (- world-height ht))
@@ -96,11 +96,11 @@
       ((qt/at x y (qt/in wm wm missile-img)))))
   (q/pop-style))
 
-(defn draw-bombs! [missiles]
+(defn draw-bombs! [bombs]
   (q/push-style)
   (apply q/fill (:red colors))
   (let [w (* 0.24 size-ufo)]
-    (doseq [[x y] missiles]
+    (doseq [[x y] bombs]
       (q/ellipse x y w w)))
   (q/pop-style))
 
@@ -169,11 +169,19 @@
     ((qt/at xu yu (qt/in size-ufo size-ufo (ufo-img :green)))))
   (q/pop-style))
 
+(defn tank-img []
+  (q/no-stroke)
+  (q/rect 0.475 0.0 0.05 0.2)
+  (q/rect 0.4 0.15 0.2 0.2)
+  (q/rect 0.1 0.35 0.8 0.2)
+  (q/rect 0.05 0.5 0.9 0.5))
+
 ; Tank -> Image
 (defn draw-tank! [tank]
   (q/push-style)
   (apply q/fill (:blue colors))
-  (q/rect (:x tank) yt wt ht)
+  ((qt/at (:x tank) yt (qt/in wt ht tank-img)))
+  ;(q/rect (:x tank) yt wt ht)
   (q/pop-style))
 
 (defn draw-menu! [score lifes]
@@ -403,7 +411,6 @@
   (max 0.0 (- speed 1)))
 
 (defn key-handler [{:keys [tank missiles game-state] :as state} {key :key key-code :key-code}]
- (.log js/console (pr-str key-code))
  (cond
    (= :game-over game-state) state
    (= :ready game-state) (cond
@@ -442,14 +449,9 @@
   (q/defsketch spaceinvaders
     :host "spaceinvaders"
     :size [world-width world-height]
-    ; setup function called only once, during sketch initialization.
     :setup setup
-    ; update-state is called on each iteration before draw-state.
     :update update-state
-    :draw draw-state
     :key-pressed key-handler
+    :draw draw-state
     :features [:keep-on-top]
     :middleware [m/fun-mode]))
-
-; uncomment this line to reset the sketch:
-; (run-sketch)

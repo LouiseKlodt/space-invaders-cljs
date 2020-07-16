@@ -6,13 +6,13 @@ goog.require('quil.middleware');
 goog.require('quiltools.core');
 goog.require('clojure.string');
 goog.require('clojure.set');
-spaceinvaders.core.world_height = (500);
-spaceinvaders.core.world_width = (500);
+spaceinvaders.core.world_height = (600);
+spaceinvaders.core.world_width = (800);
 spaceinvaders.core.vu = (3);
-spaceinvaders.core.size_ufo = (40);
+spaceinvaders.core.size_ufo = (42);
 spaceinvaders.core.size_ufo2 = (spaceinvaders.core.size_ufo / (2));
 spaceinvaders.core.max_ufos = (7);
-spaceinvaders.core.wt = (40);
+spaceinvaders.core.wt = (42);
 spaceinvaders.core.wt2 = (spaceinvaders.core.wt / (2));
 spaceinvaders.core.ht = (0.4 * spaceinvaders.core.wt);
 spaceinvaders.core.yt = (spaceinvaders.core.world_height - spaceinvaders.core.ht);
@@ -47,60 +47,60 @@ quil.core.push_style.call(null);
 
 cljs.core.apply.call(null,quil.core.fill,new cljs.core.Keyword(null,"orange","orange",73816386).cljs$core$IFn$_invoke$arity$1(spaceinvaders.core.colors));
 
-var missile_img_50619 = (function (){
+var missile_img_81607 = (function (){
 return quil.core.quad.call(null,0.5,0.2,(1),(1),0.5,0.7,(0),(1));
 });
-var seq__50603_50620 = cljs.core.seq.call(null,missiles);
-var chunk__50604_50621 = null;
-var count__50605_50622 = (0);
-var i__50606_50623 = (0);
+var seq__81591_81608 = cljs.core.seq.call(null,missiles);
+var chunk__81592_81609 = null;
+var count__81593_81610 = (0);
+var i__81594_81611 = (0);
 while(true){
-if((i__50606_50623 < count__50605_50622)){
-var vec__50613_50624 = cljs.core._nth.call(null,chunk__50604_50621,i__50606_50623);
-var x_50625 = cljs.core.nth.call(null,vec__50613_50624,(0),null);
-var y_50626 = cljs.core.nth.call(null,vec__50613_50624,(1),null);
-quiltools.core.at.call(null,x_50625,y_50626,quiltools.core.in$.call(null,spaceinvaders.core.wm,spaceinvaders.core.wm,missile_img_50619)).call(null);
+if((i__81594_81611 < count__81593_81610)){
+var vec__81601_81612 = cljs.core._nth.call(null,chunk__81592_81609,i__81594_81611);
+var x_81613 = cljs.core.nth.call(null,vec__81601_81612,(0),null);
+var y_81614 = cljs.core.nth.call(null,vec__81601_81612,(1),null);
+quiltools.core.at.call(null,x_81613,y_81614,quiltools.core.in$.call(null,spaceinvaders.core.wm,spaceinvaders.core.wm,missile_img_81607)).call(null);
 
 
-var G__50627 = seq__50603_50620;
-var G__50628 = chunk__50604_50621;
-var G__50629 = count__50605_50622;
-var G__50630 = (i__50606_50623 + (1));
-seq__50603_50620 = G__50627;
-chunk__50604_50621 = G__50628;
-count__50605_50622 = G__50629;
-i__50606_50623 = G__50630;
+var G__81615 = seq__81591_81608;
+var G__81616 = chunk__81592_81609;
+var G__81617 = count__81593_81610;
+var G__81618 = (i__81594_81611 + (1));
+seq__81591_81608 = G__81615;
+chunk__81592_81609 = G__81616;
+count__81593_81610 = G__81617;
+i__81594_81611 = G__81618;
 continue;
 } else {
-var temp__5735__auto___50631 = cljs.core.seq.call(null,seq__50603_50620);
-if(temp__5735__auto___50631){
-var seq__50603_50632__$1 = temp__5735__auto___50631;
-if(cljs.core.chunked_seq_QMARK_.call(null,seq__50603_50632__$1)){
-var c__4550__auto___50633 = cljs.core.chunk_first.call(null,seq__50603_50632__$1);
-var G__50634 = cljs.core.chunk_rest.call(null,seq__50603_50632__$1);
-var G__50635 = c__4550__auto___50633;
-var G__50636 = cljs.core.count.call(null,c__4550__auto___50633);
-var G__50637 = (0);
-seq__50603_50620 = G__50634;
-chunk__50604_50621 = G__50635;
-count__50605_50622 = G__50636;
-i__50606_50623 = G__50637;
+var temp__5735__auto___81619 = cljs.core.seq.call(null,seq__81591_81608);
+if(temp__5735__auto___81619){
+var seq__81591_81620__$1 = temp__5735__auto___81619;
+if(cljs.core.chunked_seq_QMARK_.call(null,seq__81591_81620__$1)){
+var c__4550__auto___81621 = cljs.core.chunk_first.call(null,seq__81591_81620__$1);
+var G__81622 = cljs.core.chunk_rest.call(null,seq__81591_81620__$1);
+var G__81623 = c__4550__auto___81621;
+var G__81624 = cljs.core.count.call(null,c__4550__auto___81621);
+var G__81625 = (0);
+seq__81591_81608 = G__81622;
+chunk__81592_81609 = G__81623;
+count__81593_81610 = G__81624;
+i__81594_81611 = G__81625;
 continue;
 } else {
-var vec__50616_50638 = cljs.core.first.call(null,seq__50603_50632__$1);
-var x_50639 = cljs.core.nth.call(null,vec__50616_50638,(0),null);
-var y_50640 = cljs.core.nth.call(null,vec__50616_50638,(1),null);
-quiltools.core.at.call(null,x_50639,y_50640,quiltools.core.in$.call(null,spaceinvaders.core.wm,spaceinvaders.core.wm,missile_img_50619)).call(null);
+var vec__81604_81626 = cljs.core.first.call(null,seq__81591_81620__$1);
+var x_81627 = cljs.core.nth.call(null,vec__81604_81626,(0),null);
+var y_81628 = cljs.core.nth.call(null,vec__81604_81626,(1),null);
+quiltools.core.at.call(null,x_81627,y_81628,quiltools.core.in$.call(null,spaceinvaders.core.wm,spaceinvaders.core.wm,missile_img_81607)).call(null);
 
 
-var G__50641 = cljs.core.next.call(null,seq__50603_50632__$1);
-var G__50642 = null;
-var G__50643 = (0);
-var G__50644 = (0);
-seq__50603_50620 = G__50641;
-chunk__50604_50621 = G__50642;
-count__50605_50622 = G__50643;
-i__50606_50623 = G__50644;
+var G__81629 = cljs.core.next.call(null,seq__81591_81620__$1);
+var G__81630 = null;
+var G__81631 = (0);
+var G__81632 = (0);
+seq__81591_81608 = G__81629;
+chunk__81592_81609 = G__81630;
+count__81593_81610 = G__81631;
+i__81594_81611 = G__81632;
 continue;
 }
 } else {
@@ -111,63 +111,63 @@ break;
 
 return quil.core.pop_style.call(null);
 });
-spaceinvaders.core.draw_bombs_BANG_ = (function spaceinvaders$core$draw_bombs_BANG_(missiles){
+spaceinvaders.core.draw_bombs_BANG_ = (function spaceinvaders$core$draw_bombs_BANG_(bombs){
 quil.core.push_style.call(null);
 
 cljs.core.apply.call(null,quil.core.fill,new cljs.core.Keyword(null,"red","red",-969428204).cljs$core$IFn$_invoke$arity$1(spaceinvaders.core.colors));
 
-var w_50661 = (0.24 * spaceinvaders.core.size_ufo);
-var seq__50645_50662 = cljs.core.seq.call(null,missiles);
-var chunk__50646_50663 = null;
-var count__50647_50664 = (0);
-var i__50648_50665 = (0);
+var w_81649 = (0.24 * spaceinvaders.core.size_ufo);
+var seq__81633_81650 = cljs.core.seq.call(null,bombs);
+var chunk__81634_81651 = null;
+var count__81635_81652 = (0);
+var i__81636_81653 = (0);
 while(true){
-if((i__50648_50665 < count__50647_50664)){
-var vec__50655_50666 = cljs.core._nth.call(null,chunk__50646_50663,i__50648_50665);
-var x_50667 = cljs.core.nth.call(null,vec__50655_50666,(0),null);
-var y_50668 = cljs.core.nth.call(null,vec__50655_50666,(1),null);
-quil.core.ellipse.call(null,x_50667,y_50668,w_50661,w_50661);
+if((i__81636_81653 < count__81635_81652)){
+var vec__81643_81654 = cljs.core._nth.call(null,chunk__81634_81651,i__81636_81653);
+var x_81655 = cljs.core.nth.call(null,vec__81643_81654,(0),null);
+var y_81656 = cljs.core.nth.call(null,vec__81643_81654,(1),null);
+quil.core.ellipse.call(null,x_81655,y_81656,w_81649,w_81649);
 
 
-var G__50669 = seq__50645_50662;
-var G__50670 = chunk__50646_50663;
-var G__50671 = count__50647_50664;
-var G__50672 = (i__50648_50665 + (1));
-seq__50645_50662 = G__50669;
-chunk__50646_50663 = G__50670;
-count__50647_50664 = G__50671;
-i__50648_50665 = G__50672;
+var G__81657 = seq__81633_81650;
+var G__81658 = chunk__81634_81651;
+var G__81659 = count__81635_81652;
+var G__81660 = (i__81636_81653 + (1));
+seq__81633_81650 = G__81657;
+chunk__81634_81651 = G__81658;
+count__81635_81652 = G__81659;
+i__81636_81653 = G__81660;
 continue;
 } else {
-var temp__5735__auto___50673 = cljs.core.seq.call(null,seq__50645_50662);
-if(temp__5735__auto___50673){
-var seq__50645_50674__$1 = temp__5735__auto___50673;
-if(cljs.core.chunked_seq_QMARK_.call(null,seq__50645_50674__$1)){
-var c__4550__auto___50675 = cljs.core.chunk_first.call(null,seq__50645_50674__$1);
-var G__50676 = cljs.core.chunk_rest.call(null,seq__50645_50674__$1);
-var G__50677 = c__4550__auto___50675;
-var G__50678 = cljs.core.count.call(null,c__4550__auto___50675);
-var G__50679 = (0);
-seq__50645_50662 = G__50676;
-chunk__50646_50663 = G__50677;
-count__50647_50664 = G__50678;
-i__50648_50665 = G__50679;
+var temp__5735__auto___81661 = cljs.core.seq.call(null,seq__81633_81650);
+if(temp__5735__auto___81661){
+var seq__81633_81662__$1 = temp__5735__auto___81661;
+if(cljs.core.chunked_seq_QMARK_.call(null,seq__81633_81662__$1)){
+var c__4550__auto___81663 = cljs.core.chunk_first.call(null,seq__81633_81662__$1);
+var G__81664 = cljs.core.chunk_rest.call(null,seq__81633_81662__$1);
+var G__81665 = c__4550__auto___81663;
+var G__81666 = cljs.core.count.call(null,c__4550__auto___81663);
+var G__81667 = (0);
+seq__81633_81650 = G__81664;
+chunk__81634_81651 = G__81665;
+count__81635_81652 = G__81666;
+i__81636_81653 = G__81667;
 continue;
 } else {
-var vec__50658_50680 = cljs.core.first.call(null,seq__50645_50674__$1);
-var x_50681 = cljs.core.nth.call(null,vec__50658_50680,(0),null);
-var y_50682 = cljs.core.nth.call(null,vec__50658_50680,(1),null);
-quil.core.ellipse.call(null,x_50681,y_50682,w_50661,w_50661);
+var vec__81646_81668 = cljs.core.first.call(null,seq__81633_81662__$1);
+var x_81669 = cljs.core.nth.call(null,vec__81646_81668,(0),null);
+var y_81670 = cljs.core.nth.call(null,vec__81646_81668,(1),null);
+quil.core.ellipse.call(null,x_81669,y_81670,w_81649,w_81649);
 
 
-var G__50683 = cljs.core.next.call(null,seq__50645_50674__$1);
-var G__50684 = null;
-var G__50685 = (0);
-var G__50686 = (0);
-seq__50645_50662 = G__50683;
-chunk__50646_50663 = G__50684;
-count__50647_50664 = G__50685;
-i__50648_50665 = G__50686;
+var G__81671 = cljs.core.next.call(null,seq__81633_81662__$1);
+var G__81672 = null;
+var G__81673 = (0);
+var G__81674 = (0);
+seq__81633_81650 = G__81671;
+chunk__81634_81651 = G__81672;
+count__81635_81652 = G__81673;
+i__81636_81653 = G__81674;
 continue;
 }
 } else {
@@ -218,58 +218,58 @@ quil.core.push_style.call(null);
 
 cljs.core.apply.call(null,quil.core.fill,new cljs.core.Keyword(null,"red","red",-969428204).cljs$core$IFn$_invoke$arity$1(spaceinvaders.core.colors));
 
-var w_50703 = (0.8 * spaceinvaders.core.size_ufo);
-var seq__50687_50704 = cljs.core.seq.call(null,bombs);
-var chunk__50688_50705 = null;
-var count__50689_50706 = (0);
-var i__50690_50707 = (0);
+var w_81691 = (0.8 * spaceinvaders.core.size_ufo);
+var seq__81675_81692 = cljs.core.seq.call(null,bombs);
+var chunk__81676_81693 = null;
+var count__81677_81694 = (0);
+var i__81678_81695 = (0);
 while(true){
-if((i__50690_50707 < count__50689_50706)){
-var vec__50697_50708 = cljs.core._nth.call(null,chunk__50688_50705,i__50690_50707);
-var x_50709 = cljs.core.nth.call(null,vec__50697_50708,(0),null);
-var y_50710 = cljs.core.nth.call(null,vec__50697_50708,(1),null);
-quiltools.core.at.call(null,x_50709,y_50710,quiltools.core.in$.call(null,w_50703,w_50703,spaceinvaders.core.alien_img)).call(null);
+if((i__81678_81695 < count__81677_81694)){
+var vec__81685_81696 = cljs.core._nth.call(null,chunk__81676_81693,i__81678_81695);
+var x_81697 = cljs.core.nth.call(null,vec__81685_81696,(0),null);
+var y_81698 = cljs.core.nth.call(null,vec__81685_81696,(1),null);
+quiltools.core.at.call(null,x_81697,y_81698,quiltools.core.in$.call(null,w_81691,w_81691,spaceinvaders.core.alien_img)).call(null);
 
 
-var G__50711 = seq__50687_50704;
-var G__50712 = chunk__50688_50705;
-var G__50713 = count__50689_50706;
-var G__50714 = (i__50690_50707 + (1));
-seq__50687_50704 = G__50711;
-chunk__50688_50705 = G__50712;
-count__50689_50706 = G__50713;
-i__50690_50707 = G__50714;
+var G__81699 = seq__81675_81692;
+var G__81700 = chunk__81676_81693;
+var G__81701 = count__81677_81694;
+var G__81702 = (i__81678_81695 + (1));
+seq__81675_81692 = G__81699;
+chunk__81676_81693 = G__81700;
+count__81677_81694 = G__81701;
+i__81678_81695 = G__81702;
 continue;
 } else {
-var temp__5735__auto___50715 = cljs.core.seq.call(null,seq__50687_50704);
-if(temp__5735__auto___50715){
-var seq__50687_50716__$1 = temp__5735__auto___50715;
-if(cljs.core.chunked_seq_QMARK_.call(null,seq__50687_50716__$1)){
-var c__4550__auto___50717 = cljs.core.chunk_first.call(null,seq__50687_50716__$1);
-var G__50718 = cljs.core.chunk_rest.call(null,seq__50687_50716__$1);
-var G__50719 = c__4550__auto___50717;
-var G__50720 = cljs.core.count.call(null,c__4550__auto___50717);
-var G__50721 = (0);
-seq__50687_50704 = G__50718;
-chunk__50688_50705 = G__50719;
-count__50689_50706 = G__50720;
-i__50690_50707 = G__50721;
+var temp__5735__auto___81703 = cljs.core.seq.call(null,seq__81675_81692);
+if(temp__5735__auto___81703){
+var seq__81675_81704__$1 = temp__5735__auto___81703;
+if(cljs.core.chunked_seq_QMARK_.call(null,seq__81675_81704__$1)){
+var c__4550__auto___81705 = cljs.core.chunk_first.call(null,seq__81675_81704__$1);
+var G__81706 = cljs.core.chunk_rest.call(null,seq__81675_81704__$1);
+var G__81707 = c__4550__auto___81705;
+var G__81708 = cljs.core.count.call(null,c__4550__auto___81705);
+var G__81709 = (0);
+seq__81675_81692 = G__81706;
+chunk__81676_81693 = G__81707;
+count__81677_81694 = G__81708;
+i__81678_81695 = G__81709;
 continue;
 } else {
-var vec__50700_50722 = cljs.core.first.call(null,seq__50687_50716__$1);
-var x_50723 = cljs.core.nth.call(null,vec__50700_50722,(0),null);
-var y_50724 = cljs.core.nth.call(null,vec__50700_50722,(1),null);
-quiltools.core.at.call(null,x_50723,y_50724,quiltools.core.in$.call(null,w_50703,w_50703,spaceinvaders.core.alien_img)).call(null);
+var vec__81688_81710 = cljs.core.first.call(null,seq__81675_81704__$1);
+var x_81711 = cljs.core.nth.call(null,vec__81688_81710,(0),null);
+var y_81712 = cljs.core.nth.call(null,vec__81688_81710,(1),null);
+quiltools.core.at.call(null,x_81711,y_81712,quiltools.core.in$.call(null,w_81691,w_81691,spaceinvaders.core.alien_img)).call(null);
 
 
-var G__50725 = cljs.core.next.call(null,seq__50687_50716__$1);
-var G__50726 = null;
-var G__50727 = (0);
-var G__50728 = (0);
-seq__50687_50704 = G__50725;
-chunk__50688_50705 = G__50726;
-count__50689_50706 = G__50727;
-i__50690_50707 = G__50728;
+var G__81713 = cljs.core.next.call(null,seq__81675_81704__$1);
+var G__81714 = null;
+var G__81715 = (0);
+var G__81716 = (0);
+seq__81675_81692 = G__81713;
+chunk__81676_81693 = G__81714;
+count__81677_81694 = G__81715;
+i__81678_81695 = G__81716;
 continue;
 }
 } else {
@@ -287,67 +287,67 @@ quil.core.push_style.call(null);
 
 quil.core.stroke.call(null,(120));
 
-var spacing_50733 = 0.04;
-var w_50734 = (((1) - (spacing_50733 * (spaceinvaders.core.max_missiles - (1)))) / spaceinvaders.core.max_missiles);
-var seq__50729_50735 = cljs.core.seq.call(null,cljs.core.range.call(null,spaceinvaders.core.max_missiles));
-var chunk__50730_50736 = null;
-var count__50731_50737 = (0);
-var i__50732_50738 = (0);
+var spacing_81721 = 0.04;
+var w_81722 = (((1) - (spacing_81721 * (spaceinvaders.core.max_missiles - (1)))) / spaceinvaders.core.max_missiles);
+var seq__81717_81723 = cljs.core.seq.call(null,cljs.core.range.call(null,spaceinvaders.core.max_missiles));
+var chunk__81718_81724 = null;
+var count__81719_81725 = (0);
+var i__81720_81726 = (0);
 while(true){
-if((i__50732_50738 < count__50731_50737)){
-var n_50739 = cljs.core._nth.call(null,chunk__50730_50736,i__50732_50738);
-if((n_50739 < n_missiles)){
+if((i__81720_81726 < count__81719_81725)){
+var n_81727 = cljs.core._nth.call(null,chunk__81718_81724,i__81720_81726);
+if((n_81727 < n_missiles)){
 quil.core.no_fill.call(null);
 } else {
 cljs.core.apply.call(null,quil.core.fill,new cljs.core.Keyword(null,"orange","orange",73816386).cljs$core$IFn$_invoke$arity$1(spaceinvaders.core.colors));
 }
 
-quil.core.ellipse.call(null,((w_50734 / (2)) + (n_50739 * (w_50734 + spacing_50733))),(0),w_50734,w_50734);
+quil.core.ellipse.call(null,((w_81722 / (2)) + (n_81727 * (w_81722 + spacing_81721))),(0),w_81722,w_81722);
 
 
-var G__50740 = seq__50729_50735;
-var G__50741 = chunk__50730_50736;
-var G__50742 = count__50731_50737;
-var G__50743 = (i__50732_50738 + (1));
-seq__50729_50735 = G__50740;
-chunk__50730_50736 = G__50741;
-count__50731_50737 = G__50742;
-i__50732_50738 = G__50743;
+var G__81728 = seq__81717_81723;
+var G__81729 = chunk__81718_81724;
+var G__81730 = count__81719_81725;
+var G__81731 = (i__81720_81726 + (1));
+seq__81717_81723 = G__81728;
+chunk__81718_81724 = G__81729;
+count__81719_81725 = G__81730;
+i__81720_81726 = G__81731;
 continue;
 } else {
-var temp__5735__auto___50744 = cljs.core.seq.call(null,seq__50729_50735);
-if(temp__5735__auto___50744){
-var seq__50729_50745__$1 = temp__5735__auto___50744;
-if(cljs.core.chunked_seq_QMARK_.call(null,seq__50729_50745__$1)){
-var c__4550__auto___50746 = cljs.core.chunk_first.call(null,seq__50729_50745__$1);
-var G__50747 = cljs.core.chunk_rest.call(null,seq__50729_50745__$1);
-var G__50748 = c__4550__auto___50746;
-var G__50749 = cljs.core.count.call(null,c__4550__auto___50746);
-var G__50750 = (0);
-seq__50729_50735 = G__50747;
-chunk__50730_50736 = G__50748;
-count__50731_50737 = G__50749;
-i__50732_50738 = G__50750;
+var temp__5735__auto___81732 = cljs.core.seq.call(null,seq__81717_81723);
+if(temp__5735__auto___81732){
+var seq__81717_81733__$1 = temp__5735__auto___81732;
+if(cljs.core.chunked_seq_QMARK_.call(null,seq__81717_81733__$1)){
+var c__4550__auto___81734 = cljs.core.chunk_first.call(null,seq__81717_81733__$1);
+var G__81735 = cljs.core.chunk_rest.call(null,seq__81717_81733__$1);
+var G__81736 = c__4550__auto___81734;
+var G__81737 = cljs.core.count.call(null,c__4550__auto___81734);
+var G__81738 = (0);
+seq__81717_81723 = G__81735;
+chunk__81718_81724 = G__81736;
+count__81719_81725 = G__81737;
+i__81720_81726 = G__81738;
 continue;
 } else {
-var n_50751 = cljs.core.first.call(null,seq__50729_50745__$1);
-if((n_50751 < n_missiles)){
+var n_81739 = cljs.core.first.call(null,seq__81717_81733__$1);
+if((n_81739 < n_missiles)){
 quil.core.no_fill.call(null);
 } else {
 cljs.core.apply.call(null,quil.core.fill,new cljs.core.Keyword(null,"orange","orange",73816386).cljs$core$IFn$_invoke$arity$1(spaceinvaders.core.colors));
 }
 
-quil.core.ellipse.call(null,((w_50734 / (2)) + (n_50751 * (w_50734 + spacing_50733))),(0),w_50734,w_50734);
+quil.core.ellipse.call(null,((w_81722 / (2)) + (n_81739 * (w_81722 + spacing_81721))),(0),w_81722,w_81722);
 
 
-var G__50752 = cljs.core.next.call(null,seq__50729_50745__$1);
-var G__50753 = null;
-var G__50754 = (0);
-var G__50755 = (0);
-seq__50729_50735 = G__50752;
-chunk__50730_50736 = G__50753;
-count__50731_50737 = G__50754;
-i__50732_50738 = G__50755;
+var G__81740 = cljs.core.next.call(null,seq__81717_81733__$1);
+var G__81741 = null;
+var G__81742 = (0);
+var G__81743 = (0);
+seq__81717_81723 = G__81740;
+chunk__81718_81724 = G__81741;
+count__81719_81725 = G__81742;
+i__81720_81726 = G__81743;
 continue;
 }
 } else {
@@ -381,57 +381,57 @@ cljs.core.apply.call(null,quil.core.fill,new cljs.core.Keyword(null,"green","gre
 
 quil.core.stroke_weight.call(null,(1));
 
-var seq__50756_50772 = cljs.core.seq.call(null,ufos);
-var chunk__50757_50773 = null;
-var count__50758_50774 = (0);
-var i__50759_50775 = (0);
+var seq__81744_81760 = cljs.core.seq.call(null,ufos);
+var chunk__81745_81761 = null;
+var count__81746_81762 = (0);
+var i__81747_81763 = (0);
 while(true){
-if((i__50759_50775 < count__50758_50774)){
-var vec__50766_50776 = cljs.core._nth.call(null,chunk__50757_50773,i__50759_50775);
-var xu_50777 = cljs.core.nth.call(null,vec__50766_50776,(0),null);
-var yu_50778 = cljs.core.nth.call(null,vec__50766_50776,(1),null);
-quiltools.core.at.call(null,xu_50777,yu_50778,quiltools.core.in$.call(null,spaceinvaders.core.size_ufo,spaceinvaders.core.size_ufo,spaceinvaders.core.ufo_img.call(null,new cljs.core.Keyword(null,"green","green",-945526839)))).call(null);
+if((i__81747_81763 < count__81746_81762)){
+var vec__81754_81764 = cljs.core._nth.call(null,chunk__81745_81761,i__81747_81763);
+var xu_81765 = cljs.core.nth.call(null,vec__81754_81764,(0),null);
+var yu_81766 = cljs.core.nth.call(null,vec__81754_81764,(1),null);
+quiltools.core.at.call(null,xu_81765,yu_81766,quiltools.core.in$.call(null,spaceinvaders.core.size_ufo,spaceinvaders.core.size_ufo,spaceinvaders.core.ufo_img.call(null,new cljs.core.Keyword(null,"green","green",-945526839)))).call(null);
 
 
-var G__50779 = seq__50756_50772;
-var G__50780 = chunk__50757_50773;
-var G__50781 = count__50758_50774;
-var G__50782 = (i__50759_50775 + (1));
-seq__50756_50772 = G__50779;
-chunk__50757_50773 = G__50780;
-count__50758_50774 = G__50781;
-i__50759_50775 = G__50782;
+var G__81767 = seq__81744_81760;
+var G__81768 = chunk__81745_81761;
+var G__81769 = count__81746_81762;
+var G__81770 = (i__81747_81763 + (1));
+seq__81744_81760 = G__81767;
+chunk__81745_81761 = G__81768;
+count__81746_81762 = G__81769;
+i__81747_81763 = G__81770;
 continue;
 } else {
-var temp__5735__auto___50783 = cljs.core.seq.call(null,seq__50756_50772);
-if(temp__5735__auto___50783){
-var seq__50756_50784__$1 = temp__5735__auto___50783;
-if(cljs.core.chunked_seq_QMARK_.call(null,seq__50756_50784__$1)){
-var c__4550__auto___50785 = cljs.core.chunk_first.call(null,seq__50756_50784__$1);
-var G__50786 = cljs.core.chunk_rest.call(null,seq__50756_50784__$1);
-var G__50787 = c__4550__auto___50785;
-var G__50788 = cljs.core.count.call(null,c__4550__auto___50785);
-var G__50789 = (0);
-seq__50756_50772 = G__50786;
-chunk__50757_50773 = G__50787;
-count__50758_50774 = G__50788;
-i__50759_50775 = G__50789;
+var temp__5735__auto___81771 = cljs.core.seq.call(null,seq__81744_81760);
+if(temp__5735__auto___81771){
+var seq__81744_81772__$1 = temp__5735__auto___81771;
+if(cljs.core.chunked_seq_QMARK_.call(null,seq__81744_81772__$1)){
+var c__4550__auto___81773 = cljs.core.chunk_first.call(null,seq__81744_81772__$1);
+var G__81774 = cljs.core.chunk_rest.call(null,seq__81744_81772__$1);
+var G__81775 = c__4550__auto___81773;
+var G__81776 = cljs.core.count.call(null,c__4550__auto___81773);
+var G__81777 = (0);
+seq__81744_81760 = G__81774;
+chunk__81745_81761 = G__81775;
+count__81746_81762 = G__81776;
+i__81747_81763 = G__81777;
 continue;
 } else {
-var vec__50769_50790 = cljs.core.first.call(null,seq__50756_50784__$1);
-var xu_50791 = cljs.core.nth.call(null,vec__50769_50790,(0),null);
-var yu_50792 = cljs.core.nth.call(null,vec__50769_50790,(1),null);
-quiltools.core.at.call(null,xu_50791,yu_50792,quiltools.core.in$.call(null,spaceinvaders.core.size_ufo,spaceinvaders.core.size_ufo,spaceinvaders.core.ufo_img.call(null,new cljs.core.Keyword(null,"green","green",-945526839)))).call(null);
+var vec__81757_81778 = cljs.core.first.call(null,seq__81744_81772__$1);
+var xu_81779 = cljs.core.nth.call(null,vec__81757_81778,(0),null);
+var yu_81780 = cljs.core.nth.call(null,vec__81757_81778,(1),null);
+quiltools.core.at.call(null,xu_81779,yu_81780,quiltools.core.in$.call(null,spaceinvaders.core.size_ufo,spaceinvaders.core.size_ufo,spaceinvaders.core.ufo_img.call(null,new cljs.core.Keyword(null,"green","green",-945526839)))).call(null);
 
 
-var G__50793 = cljs.core.next.call(null,seq__50756_50784__$1);
-var G__50794 = null;
-var G__50795 = (0);
-var G__50796 = (0);
-seq__50756_50772 = G__50793;
-chunk__50757_50773 = G__50794;
-count__50758_50774 = G__50795;
-i__50759_50775 = G__50796;
+var G__81781 = cljs.core.next.call(null,seq__81744_81772__$1);
+var G__81782 = null;
+var G__81783 = (0);
+var G__81784 = (0);
+seq__81744_81760 = G__81781;
+chunk__81745_81761 = G__81782;
+count__81746_81762 = G__81783;
+i__81747_81763 = G__81784;
 continue;
 }
 } else {
@@ -442,12 +442,23 @@ break;
 
 return quil.core.pop_style.call(null);
 });
+spaceinvaders.core.tank_img = (function spaceinvaders$core$tank_img(){
+quil.core.no_stroke.call(null);
+
+quil.core.rect.call(null,0.475,0.0,0.05,0.2);
+
+quil.core.rect.call(null,0.4,0.15,0.2,0.2);
+
+quil.core.rect.call(null,0.1,0.35,0.8,0.2);
+
+return quil.core.rect.call(null,0.05,0.5,0.9,0.5);
+});
 spaceinvaders.core.draw_tank_BANG_ = (function spaceinvaders$core$draw_tank_BANG_(tank){
 quil.core.push_style.call(null);
 
 cljs.core.apply.call(null,quil.core.fill,new cljs.core.Keyword(null,"blue","blue",-622100620).cljs$core$IFn$_invoke$arity$1(spaceinvaders.core.colors));
 
-quil.core.rect.call(null,new cljs.core.Keyword(null,"x","x",2099068185).cljs$core$IFn$_invoke$arity$1(tank),spaceinvaders.core.yt,spaceinvaders.core.wt,spaceinvaders.core.ht);
+quiltools.core.at.call(null,new cljs.core.Keyword(null,"x","x",2099068185).cljs$core$IFn$_invoke$arity$1(tank),spaceinvaders.core.yt,quiltools.core.in$.call(null,spaceinvaders.core.wt,spaceinvaders.core.ht,spaceinvaders.core.tank_img)).call(null);
 
 return quil.core.pop_style.call(null);
 });
@@ -456,10 +467,10 @@ quil.core.push_style.call(null);
 
 quil.core.fill.call(null,(255));
 
-var lifes_y_50797 = ((2) * spaceinvaders.core.top_margin);
+var lifes_y_81785 = ((2) * spaceinvaders.core.top_margin);
 quil.core.text.call(null,["score: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(score)].join(''),spaceinvaders.core.top_margin,spaceinvaders.core.top_margin);
 
-quil.core.text.call(null,["lifes: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(lifes)].join(''),spaceinvaders.core.top_margin,lifes_y_50797);
+quil.core.text.call(null,["lifes: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(lifes)].join(''),spaceinvaders.core.top_margin,lifes_y_81785);
 
 return quil.core.pop_style.call(null);
 });
@@ -468,19 +479,19 @@ quil.core.push_style.call(null);
 
 quil.core.fill.call(null,(255));
 
-var txt_pos_50798 = spaceinvaders.core.top_margin;
-quil.core.text.call(null,["score: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(score)].join(''),txt_pos_50798,txt_pos_50798);
+var txt_pos_81786 = spaceinvaders.core.top_margin;
+quil.core.text.call(null,["score: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(score)].join(''),txt_pos_81786,txt_pos_81786);
 
 return quil.core.pop_style.call(null);
 });
 spaceinvaders.core.flash_ufo_BANG_ = (function spaceinvaders$core$flash_ufo_BANG_(x,y,counter){
 quil.core.push_style.call(null);
 
-var blink_time_50799 = (4);
-var colors_50800 = new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"yellow-rose","yellow-rose",-1393460454),new cljs.core.Keyword(null,"electric-red","electric-red",-88027711),new cljs.core.Keyword(null,"aqua","aqua",745022417),new cljs.core.Keyword(null,"rose-garnet","rose-garnet",37248167)], null);
-var phase_50801 = cljs.core.mod.call(null,cljs.core.quot.call(null,counter,blink_time_50799),cljs.core.count.call(null,colors_50800));
-var next_color_50802 = colors_50800.call(null,phase_50801);
-quiltools.core.at.call(null,x,y,quiltools.core.in$.call(null,spaceinvaders.core.size_ufo,spaceinvaders.core.size_ufo,spaceinvaders.core.ufo_img.call(null,next_color_50802))).call(null);
+var blink_time_81787 = (4);
+var colors_81788 = new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"yellow-rose","yellow-rose",-1393460454),new cljs.core.Keyword(null,"electric-red","electric-red",-88027711),new cljs.core.Keyword(null,"aqua","aqua",745022417),new cljs.core.Keyword(null,"rose-garnet","rose-garnet",37248167)], null);
+var phase_81789 = cljs.core.mod.call(null,cljs.core.quot.call(null,counter,blink_time_81787),cljs.core.count.call(null,colors_81788));
+var next_color_81790 = colors_81788.call(null,phase_81789);
+quiltools.core.at.call(null,x,y,quiltools.core.in$.call(null,spaceinvaders.core.size_ufo,spaceinvaders.core.size_ufo,spaceinvaders.core.ufo_img.call(null,next_color_81790))).call(null);
 
 return quil.core.pop_style.call(null);
 });
@@ -488,13 +499,13 @@ spaceinvaders.core.descend_ufo_BANG_ = (function spaceinvaders$core$descend_ufo_
 var dy = cljs.core.mod.call(null,counter,(30));
 return spaceinvaders.core.flash_ufo_BANG_.call(null,x,(y + dy),counter);
 });
-spaceinvaders.core.draw_explosion_BANG_ = (function spaceinvaders$core$draw_explosion_BANG_(p__50803){
-var map__50804 = p__50803;
-var map__50804__$1 = (((((!((map__50804 == null))))?(((((map__50804.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__50804.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.call(null,cljs.core.hash_map,map__50804):map__50804);
-var hit = map__50804__$1;
-var x = cljs.core.get.call(null,map__50804__$1,new cljs.core.Keyword(null,"x","x",2099068185));
-var y = cljs.core.get.call(null,map__50804__$1,new cljs.core.Keyword(null,"y","y",-1757859776));
-var counter = cljs.core.get.call(null,map__50804__$1,new cljs.core.Keyword(null,"counter","counter",804008177));
+spaceinvaders.core.draw_explosion_BANG_ = (function spaceinvaders$core$draw_explosion_BANG_(p__81791){
+var map__81792 = p__81791;
+var map__81792__$1 = (((((!((map__81792 == null))))?(((((map__81792.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__81792.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.call(null,cljs.core.hash_map,map__81792):map__81792);
+var hit = map__81792__$1;
+var x = cljs.core.get.call(null,map__81792__$1,new cljs.core.Keyword(null,"x","x",2099068185));
+var y = cljs.core.get.call(null,map__81792__$1,new cljs.core.Keyword(null,"y","y",-1757859776));
+var counter = cljs.core.get.call(null,map__81792__$1,new cljs.core.Keyword(null,"counter","counter",804008177));
 if(((((0) <= counter)) && ((counter <= (30))))){
 return spaceinvaders.core.flash_ufo_BANG_.call(null,x,y,counter);
 } else {
@@ -510,59 +521,59 @@ quil.core.push_style.call(null);
 
 quil.core.fill.call(null,(255));
 
-var seq__50806_50822 = cljs.core.seq.call(null,stars);
-var chunk__50807_50823 = null;
-var count__50808_50824 = (0);
-var i__50809_50825 = (0);
+var seq__81794_81810 = cljs.core.seq.call(null,stars);
+var chunk__81795_81811 = null;
+var count__81796_81812 = (0);
+var i__81797_81813 = (0);
 while(true){
-if((i__50809_50825 < count__50808_50824)){
-var vec__50816_50826 = cljs.core._nth.call(null,chunk__50807_50823,i__50809_50825);
-var x_50827 = cljs.core.nth.call(null,vec__50816_50826,(0),null);
-var y_50828 = cljs.core.nth.call(null,vec__50816_50826,(1),null);
-var s_50829 = cljs.core.nth.call(null,vec__50816_50826,(2),null);
-quil.core.ellipse.call(null,x_50827,y_50828,s_50829,s_50829);
+if((i__81797_81813 < count__81796_81812)){
+var vec__81804_81814 = cljs.core._nth.call(null,chunk__81795_81811,i__81797_81813);
+var x_81815 = cljs.core.nth.call(null,vec__81804_81814,(0),null);
+var y_81816 = cljs.core.nth.call(null,vec__81804_81814,(1),null);
+var s_81817 = cljs.core.nth.call(null,vec__81804_81814,(2),null);
+quil.core.ellipse.call(null,x_81815,y_81816,s_81817,s_81817);
 
 
-var G__50830 = seq__50806_50822;
-var G__50831 = chunk__50807_50823;
-var G__50832 = count__50808_50824;
-var G__50833 = (i__50809_50825 + (1));
-seq__50806_50822 = G__50830;
-chunk__50807_50823 = G__50831;
-count__50808_50824 = G__50832;
-i__50809_50825 = G__50833;
+var G__81818 = seq__81794_81810;
+var G__81819 = chunk__81795_81811;
+var G__81820 = count__81796_81812;
+var G__81821 = (i__81797_81813 + (1));
+seq__81794_81810 = G__81818;
+chunk__81795_81811 = G__81819;
+count__81796_81812 = G__81820;
+i__81797_81813 = G__81821;
 continue;
 } else {
-var temp__5735__auto___50834 = cljs.core.seq.call(null,seq__50806_50822);
-if(temp__5735__auto___50834){
-var seq__50806_50835__$1 = temp__5735__auto___50834;
-if(cljs.core.chunked_seq_QMARK_.call(null,seq__50806_50835__$1)){
-var c__4550__auto___50836 = cljs.core.chunk_first.call(null,seq__50806_50835__$1);
-var G__50837 = cljs.core.chunk_rest.call(null,seq__50806_50835__$1);
-var G__50838 = c__4550__auto___50836;
-var G__50839 = cljs.core.count.call(null,c__4550__auto___50836);
-var G__50840 = (0);
-seq__50806_50822 = G__50837;
-chunk__50807_50823 = G__50838;
-count__50808_50824 = G__50839;
-i__50809_50825 = G__50840;
+var temp__5735__auto___81822 = cljs.core.seq.call(null,seq__81794_81810);
+if(temp__5735__auto___81822){
+var seq__81794_81823__$1 = temp__5735__auto___81822;
+if(cljs.core.chunked_seq_QMARK_.call(null,seq__81794_81823__$1)){
+var c__4550__auto___81824 = cljs.core.chunk_first.call(null,seq__81794_81823__$1);
+var G__81825 = cljs.core.chunk_rest.call(null,seq__81794_81823__$1);
+var G__81826 = c__4550__auto___81824;
+var G__81827 = cljs.core.count.call(null,c__4550__auto___81824);
+var G__81828 = (0);
+seq__81794_81810 = G__81825;
+chunk__81795_81811 = G__81826;
+count__81796_81812 = G__81827;
+i__81797_81813 = G__81828;
 continue;
 } else {
-var vec__50819_50841 = cljs.core.first.call(null,seq__50806_50835__$1);
-var x_50842 = cljs.core.nth.call(null,vec__50819_50841,(0),null);
-var y_50843 = cljs.core.nth.call(null,vec__50819_50841,(1),null);
-var s_50844 = cljs.core.nth.call(null,vec__50819_50841,(2),null);
-quil.core.ellipse.call(null,x_50842,y_50843,s_50844,s_50844);
+var vec__81807_81829 = cljs.core.first.call(null,seq__81794_81823__$1);
+var x_81830 = cljs.core.nth.call(null,vec__81807_81829,(0),null);
+var y_81831 = cljs.core.nth.call(null,vec__81807_81829,(1),null);
+var s_81832 = cljs.core.nth.call(null,vec__81807_81829,(2),null);
+quil.core.ellipse.call(null,x_81830,y_81831,s_81832,s_81832);
 
 
-var G__50845 = cljs.core.next.call(null,seq__50806_50835__$1);
-var G__50846 = null;
-var G__50847 = (0);
-var G__50848 = (0);
-seq__50806_50822 = G__50845;
-chunk__50807_50823 = G__50846;
-count__50808_50824 = G__50847;
-i__50809_50825 = G__50848;
+var G__81833 = cljs.core.next.call(null,seq__81794_81823__$1);
+var G__81834 = null;
+var G__81835 = (0);
+var G__81836 = (0);
+seq__81794_81810 = G__81833;
+chunk__81795_81811 = G__81834;
+count__81796_81812 = G__81835;
+i__81797_81813 = G__81836;
 continue;
 }
 } else {
@@ -607,10 +618,10 @@ return quiltools.core.at.call(null,(0.25 * spaceinvaders.core.world_width),(0.25
 });
 spaceinvaders.core.escaped = (function spaceinvaders$core$escaped(s){
 
-return cljs.core.into.call(null,cljs.core.PersistentHashSet.EMPTY,cljs.core.filter.call(null,(function (p__50849){
-var vec__50850 = p__50849;
-var _ = cljs.core.nth.call(null,vec__50850,(0),null);
-var y = cljs.core.nth.call(null,vec__50850,(1),null);
+return cljs.core.into.call(null,cljs.core.PersistentHashSet.EMPTY,cljs.core.filter.call(null,(function (p__81837){
+var vec__81838 = p__81837;
+var _ = cljs.core.nth.call(null,vec__81838,(0),null);
+var y = cljs.core.nth.call(null,vec__81838,(1),null);
 return (((y > spaceinvaders.core.world_height)) || ((y < (0))));
 }),s));
 });
@@ -618,10 +629,10 @@ spaceinvaders.core.update_missiles = (function spaceinvaders$core$update_missile
 
 var dy = ((-2) * spaceinvaders.core.vu);
 return cljs.core.into.call(null,cljs.core.PersistentHashSet.EMPTY,cljs.core.map.call(null,((function (dy){
-return (function (p__50853){
-var vec__50854 = p__50853;
-var x = cljs.core.nth.call(null,vec__50854,(0),null);
-var y = cljs.core.nth.call(null,vec__50854,(1),null);
+return (function (p__81841){
+var vec__81842 = p__81841;
+var x = cljs.core.nth.call(null,vec__81842,(0),null);
+var y = cljs.core.nth.call(null,vec__81842,(1),null);
 return new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [x,(dy + y)], null);
 });})(dy))
 ,missiles));
@@ -630,52 +641,52 @@ spaceinvaders.core.add_new_QMARK_ = (function spaceinvaders$core$add_new_QMARK_(
 
 return (((cljs.core.count.call(null,s) <= limit)) && (quiltools.core.n_ticks_QMARK_.call(null,(freq * spaceinvaders.core.frame_rate))));
 });
-spaceinvaders.core.collision_QMARK_ = (function spaceinvaders$core$collision_QMARK_(p__50857,p__50858,wa,ha,wb,hb){
-var vec__50859 = p__50857;
-var xa = cljs.core.nth.call(null,vec__50859,(0),null);
-var ya = cljs.core.nth.call(null,vec__50859,(1),null);
-var vec__50862 = p__50858;
-var xb = cljs.core.nth.call(null,vec__50862,(0),null);
-var yb = cljs.core.nth.call(null,vec__50862,(1),null);
+spaceinvaders.core.collision_QMARK_ = (function spaceinvaders$core$collision_QMARK_(p__81845,p__81846,wa,ha,wb,hb){
+var vec__81847 = p__81845;
+var xa = cljs.core.nth.call(null,vec__81847,(0),null);
+var ya = cljs.core.nth.call(null,vec__81847,(1),null);
+var vec__81850 = p__81846;
+var xb = cljs.core.nth.call(null,vec__81850,(0),null);
+var yb = cljs.core.nth.call(null,vec__81850,(1),null);
 
 return ((((((xb - wa) <= xa)) && ((xa <= (xb + wb))))) && (((((yb - ha) <= ya)) && ((ya <= (yb + hb))))));
 });
 spaceinvaders.core.detect_explosions = (function spaceinvaders$core$detect_explosions(ufos,missiles){
 
-return cljs.core.vec.call(null,(function (){var iter__4523__auto__ = (function spaceinvaders$core$detect_explosions_$_iter__50865(s__50866){
+return cljs.core.vec.call(null,(function (){var iter__4523__auto__ = (function spaceinvaders$core$detect_explosions_$_iter__81853(s__81854){
 return (new cljs.core.LazySeq(null,(function (){
-var s__50866__$1 = s__50866;
+var s__81854__$1 = s__81854;
 while(true){
-var temp__5735__auto__ = cljs.core.seq.call(null,s__50866__$1);
+var temp__5735__auto__ = cljs.core.seq.call(null,s__81854__$1);
 if(temp__5735__auto__){
 var xs__6292__auto__ = temp__5735__auto__;
 var ufo = cljs.core.first.call(null,xs__6292__auto__);
-var iterys__4519__auto__ = ((function (s__50866__$1,ufo,xs__6292__auto__,temp__5735__auto__){
-return (function spaceinvaders$core$detect_explosions_$_iter__50865_$_iter__50867(s__50868){
-return (new cljs.core.LazySeq(null,((function (s__50866__$1,ufo,xs__6292__auto__,temp__5735__auto__){
+var iterys__4519__auto__ = ((function (s__81854__$1,ufo,xs__6292__auto__,temp__5735__auto__){
+return (function spaceinvaders$core$detect_explosions_$_iter__81853_$_iter__81855(s__81856){
+return (new cljs.core.LazySeq(null,((function (s__81854__$1,ufo,xs__6292__auto__,temp__5735__auto__){
 return (function (){
-var s__50868__$1 = s__50868;
+var s__81856__$1 = s__81856;
 while(true){
-var temp__5735__auto____$1 = cljs.core.seq.call(null,s__50868__$1);
+var temp__5735__auto____$1 = cljs.core.seq.call(null,s__81856__$1);
 if(temp__5735__auto____$1){
-var s__50868__$2 = temp__5735__auto____$1;
-if(cljs.core.chunked_seq_QMARK_.call(null,s__50868__$2)){
-var c__4521__auto__ = cljs.core.chunk_first.call(null,s__50868__$2);
+var s__81856__$2 = temp__5735__auto____$1;
+if(cljs.core.chunked_seq_QMARK_.call(null,s__81856__$2)){
+var c__4521__auto__ = cljs.core.chunk_first.call(null,s__81856__$2);
 var size__4522__auto__ = cljs.core.count.call(null,c__4521__auto__);
-var b__50870 = cljs.core.chunk_buffer.call(null,size__4522__auto__);
-if((function (){var i__50869 = (0);
+var b__81858 = cljs.core.chunk_buffer.call(null,size__4522__auto__);
+if((function (){var i__81857 = (0);
 while(true){
-if((i__50869 < size__4522__auto__)){
-var missile = cljs.core._nth.call(null,c__4521__auto__,i__50869);
+if((i__81857 < size__4522__auto__)){
+var missile = cljs.core._nth.call(null,c__4521__auto__,i__81857);
 if(spaceinvaders.core.collision_QMARK_.call(null,ufo,missile,spaceinvaders.core.size_ufo,spaceinvaders.core.size_ufo,spaceinvaders.core.wm,spaceinvaders.core.wm)){
-cljs.core.chunk_append.call(null,b__50870,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [ufo,missile], null));
+cljs.core.chunk_append.call(null,b__81858,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [ufo,missile], null));
 
-var G__50871 = (i__50869 + (1));
-i__50869 = G__50871;
+var G__81859 = (i__81857 + (1));
+i__81857 = G__81859;
 continue;
 } else {
-var G__50872 = (i__50869 + (1));
-i__50869 = G__50872;
+var G__81860 = (i__81857 + (1));
+i__81857 = G__81860;
 continue;
 }
 } else {
@@ -684,17 +695,17 @@ return true;
 break;
 }
 })()){
-return cljs.core.chunk_cons.call(null,cljs.core.chunk.call(null,b__50870),spaceinvaders$core$detect_explosions_$_iter__50865_$_iter__50867.call(null,cljs.core.chunk_rest.call(null,s__50868__$2)));
+return cljs.core.chunk_cons.call(null,cljs.core.chunk.call(null,b__81858),spaceinvaders$core$detect_explosions_$_iter__81853_$_iter__81855.call(null,cljs.core.chunk_rest.call(null,s__81856__$2)));
 } else {
-return cljs.core.chunk_cons.call(null,cljs.core.chunk.call(null,b__50870),null);
+return cljs.core.chunk_cons.call(null,cljs.core.chunk.call(null,b__81858),null);
 }
 } else {
-var missile = cljs.core.first.call(null,s__50868__$2);
+var missile = cljs.core.first.call(null,s__81856__$2);
 if(spaceinvaders.core.collision_QMARK_.call(null,ufo,missile,spaceinvaders.core.size_ufo,spaceinvaders.core.size_ufo,spaceinvaders.core.wm,spaceinvaders.core.wm)){
-return cljs.core.cons.call(null,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [ufo,missile], null),spaceinvaders$core$detect_explosions_$_iter__50865_$_iter__50867.call(null,cljs.core.rest.call(null,s__50868__$2)));
+return cljs.core.cons.call(null,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [ufo,missile], null),spaceinvaders$core$detect_explosions_$_iter__81853_$_iter__81855.call(null,cljs.core.rest.call(null,s__81856__$2)));
 } else {
-var G__50873 = cljs.core.rest.call(null,s__50868__$2);
-s__50868__$1 = G__50873;
+var G__81861 = cljs.core.rest.call(null,s__81856__$2);
+s__81856__$1 = G__81861;
 continue;
 }
 }
@@ -703,16 +714,16 @@ return null;
 }
 break;
 }
-});})(s__50866__$1,ufo,xs__6292__auto__,temp__5735__auto__))
+});})(s__81854__$1,ufo,xs__6292__auto__,temp__5735__auto__))
 ,null,null));
-});})(s__50866__$1,ufo,xs__6292__auto__,temp__5735__auto__))
+});})(s__81854__$1,ufo,xs__6292__auto__,temp__5735__auto__))
 ;
 var fs__4520__auto__ = cljs.core.seq.call(null,iterys__4519__auto__.call(null,missiles));
 if(fs__4520__auto__){
-return cljs.core.concat.call(null,fs__4520__auto__,spaceinvaders$core$detect_explosions_$_iter__50865.call(null,cljs.core.rest.call(null,s__50866__$1)));
+return cljs.core.concat.call(null,fs__4520__auto__,spaceinvaders$core$detect_explosions_$_iter__81853.call(null,cljs.core.rest.call(null,s__81854__$1)));
 } else {
-var G__50874 = cljs.core.rest.call(null,s__50866__$1);
-s__50866__$1 = G__50874;
+var G__81862 = cljs.core.rest.call(null,s__81854__$1);
+s__81854__$1 = G__81862;
 continue;
 }
 } else {
@@ -725,21 +736,21 @@ break;
 return iter__4523__auto__.call(null,ufos);
 })());
 });
-spaceinvaders.core.exploded = (function spaceinvaders$core$exploded(bombs,p__50876){
-var map__50877 = p__50876;
-var map__50877__$1 = (((((!((map__50877 == null))))?(((((map__50877.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__50877.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.call(null,cljs.core.hash_map,map__50877):map__50877);
-var xt = cljs.core.get.call(null,map__50877__$1,new cljs.core.Keyword(null,"x","x",2099068185));
+spaceinvaders.core.exploded = (function spaceinvaders$core$exploded(bombs,p__81864){
+var map__81865 = p__81864;
+var map__81865__$1 = (((((!((map__81865 == null))))?(((((map__81865.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__81865.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.call(null,cljs.core.hash_map,map__81865):map__81865);
+var xt = cljs.core.get.call(null,map__81865__$1,new cljs.core.Keyword(null,"x","x",2099068185));
 
-return cljs.core.into.call(null,cljs.core.PersistentHashSet.EMPTY,cljs.core.filter.call(null,((function (map__50877,map__50877__$1,xt){
-return (function (p1__50875_SHARP_){
-return spaceinvaders.core.collision_QMARK_.call(null,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [xt,spaceinvaders.core.yt], null),p1__50875_SHARP_,spaceinvaders.core.wt,spaceinvaders.core.ht,spaceinvaders.core.wb,spaceinvaders.core.wb);
-});})(map__50877,map__50877__$1,xt))
+return cljs.core.into.call(null,cljs.core.PersistentHashSet.EMPTY,cljs.core.filter.call(null,((function (map__81865,map__81865__$1,xt){
+return (function (p1__81863_SHARP_){
+return spaceinvaders.core.collision_QMARK_.call(null,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [xt,spaceinvaders.core.yt], null),p1__81863_SHARP_,spaceinvaders.core.wt,spaceinvaders.core.ht,spaceinvaders.core.wb,spaceinvaders.core.wb);
+});})(map__81865,map__81865__$1,xt))
 ,bombs));
 });
 spaceinvaders.core.new_bomb = (function spaceinvaders$core$new_bomb(ufos){
-var vec__50879 = cljs.core.rand_nth.call(null,cljs.core.vec.call(null,ufos));
-var x = cljs.core.nth.call(null,vec__50879,(0),null);
-var y = cljs.core.nth.call(null,vec__50879,(1),null);
+var vec__81867 = cljs.core.rand_nth.call(null,cljs.core.vec.call(null,ufos));
+var x = cljs.core.nth.call(null,vec__81867,(0),null);
+var y = cljs.core.nth.call(null,vec__81867,(1),null);
 return new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [(spaceinvaders.core.size_ufo2 + x),(spaceinvaders.core.size_ufo2 + y)], null);
 });
 spaceinvaders.core.update_bombs = (function spaceinvaders$core$update_bombs(bombs,ufos){
@@ -748,10 +759,10 @@ var freq = (1);
 var new_bombs = ((((cljs.core.seq.call(null,ufos)) && (spaceinvaders.core.add_new_QMARK_.call(null,bombs,spaceinvaders.core.max_bombs,freq))))?cljs.core.conj.call(null,bombs,spaceinvaders.core.new_bomb.call(null,ufos)):bombs);
 var dy = ((3) * spaceinvaders.core.vu);
 return cljs.core.into.call(null,cljs.core.PersistentHashSet.EMPTY,cljs.core.map.call(null,((function (freq,new_bombs,dy){
-return (function (p__50882){
-var vec__50883 = p__50882;
-var x = cljs.core.nth.call(null,vec__50883,(0),null);
-var y = cljs.core.nth.call(null,vec__50883,(1),null);
+return (function (p__81870){
+var vec__81871 = p__81870;
+var x = cljs.core.nth.call(null,vec__81871,(0),null);
+var y = cljs.core.nth.call(null,vec__81871,(1),null);
 return new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [x,(dy + y)], null);
 });})(freq,new_bombs,dy))
 ,new_bombs));
@@ -771,46 +782,46 @@ return cljs.core.update.call(null,hit,new cljs.core.Keyword(null,"counter","coun
 ,remaining));
 return cljs.core.into.call(null,updated_hits,new_hits);
 });
-spaceinvaders.core.move_tank = (function spaceinvaders$core$move_tank(p__50886){
-var map__50887 = p__50886;
-var map__50887__$1 = (((((!((map__50887 == null))))?(((((map__50887.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__50887.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.call(null,cljs.core.hash_map,map__50887):map__50887);
-var tank = map__50887__$1;
-var x = cljs.core.get.call(null,map__50887__$1,new cljs.core.Keyword(null,"x","x",2099068185));
-var dir = cljs.core.get.call(null,map__50887__$1,new cljs.core.Keyword(null,"dir","dir",1734754661));
-var speed = cljs.core.get.call(null,map__50887__$1,new cljs.core.Keyword(null,"speed","speed",1257663751));
+spaceinvaders.core.move_tank = (function spaceinvaders$core$move_tank(p__81874){
+var map__81875 = p__81874;
+var map__81875__$1 = (((((!((map__81875 == null))))?(((((map__81875.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__81875.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.call(null,cljs.core.hash_map,map__81875):map__81875);
+var tank = map__81875__$1;
+var x = cljs.core.get.call(null,map__81875__$1,new cljs.core.Keyword(null,"x","x",2099068185));
+var dir = cljs.core.get.call(null,map__81875__$1,new cljs.core.Keyword(null,"dir","dir",1734754661));
+var speed = cljs.core.get.call(null,map__81875__$1,new cljs.core.Keyword(null,"speed","speed",1257663751));
 
 var nxt_x = (x + (dir * speed));
-var ouside_canvas_QMARK_ = ((function (nxt_x,map__50887,map__50887__$1,tank,x,dir,speed){
+var ouside_canvas_QMARK_ = ((function (nxt_x,map__81875,map__81875__$1,tank,x,dir,speed){
 return (function (){
 return (((nxt_x > (spaceinvaders.core.world_width - spaceinvaders.core.wt))) || ((nxt_x < (0))));
-});})(nxt_x,map__50887,map__50887__$1,tank,x,dir,speed))
+});})(nxt_x,map__81875,map__81875__$1,tank,x,dir,speed))
 ;
 var nxt_dir = ((ouside_canvas_QMARK_.call(null))?((-1) * dir):dir);
 return cljs.core.assoc.call(null,tank,new cljs.core.Keyword(null,"x","x",2099068185),((nxt_dir * speed) + x),new cljs.core.Keyword(null,"dir","dir",1734754661),nxt_dir);
 });
 spaceinvaders.core.move_stars = (function spaceinvaders$core$move_stars(stars){
-var iter__4523__auto__ = (function spaceinvaders$core$move_stars_$_iter__50889(s__50890){
+var iter__4523__auto__ = (function spaceinvaders$core$move_stars_$_iter__81877(s__81878){
 return (new cljs.core.LazySeq(null,(function (){
-var s__50890__$1 = s__50890;
+var s__81878__$1 = s__81878;
 while(true){
-var temp__5735__auto__ = cljs.core.seq.call(null,s__50890__$1);
+var temp__5735__auto__ = cljs.core.seq.call(null,s__81878__$1);
 if(temp__5735__auto__){
-var s__50890__$2 = temp__5735__auto__;
-if(cljs.core.chunked_seq_QMARK_.call(null,s__50890__$2)){
-var c__4521__auto__ = cljs.core.chunk_first.call(null,s__50890__$2);
+var s__81878__$2 = temp__5735__auto__;
+if(cljs.core.chunked_seq_QMARK_.call(null,s__81878__$2)){
+var c__4521__auto__ = cljs.core.chunk_first.call(null,s__81878__$2);
 var size__4522__auto__ = cljs.core.count.call(null,c__4521__auto__);
-var b__50892 = cljs.core.chunk_buffer.call(null,size__4522__auto__);
-if((function (){var i__50891 = (0);
+var b__81880 = cljs.core.chunk_buffer.call(null,size__4522__auto__);
+if((function (){var i__81879 = (0);
 while(true){
-if((i__50891 < size__4522__auto__)){
-var vec__50893 = cljs.core._nth.call(null,c__4521__auto__,i__50891);
-var x = cljs.core.nth.call(null,vec__50893,(0),null);
-var y = cljs.core.nth.call(null,vec__50893,(1),null);
-var size = cljs.core.nth.call(null,vec__50893,(2),null);
-cljs.core.chunk_append.call(null,b__50892,new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [x,cljs.core.mod.call(null,(0.8 + y),spaceinvaders.core.world_height),size], null));
+if((i__81879 < size__4522__auto__)){
+var vec__81881 = cljs.core._nth.call(null,c__4521__auto__,i__81879);
+var x = cljs.core.nth.call(null,vec__81881,(0),null);
+var y = cljs.core.nth.call(null,vec__81881,(1),null);
+var size = cljs.core.nth.call(null,vec__81881,(2),null);
+cljs.core.chunk_append.call(null,b__81880,new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [x,cljs.core.mod.call(null,(0.8 + y),spaceinvaders.core.world_height),size], null));
 
-var G__50899 = (i__50891 + (1));
-i__50891 = G__50899;
+var G__81887 = (i__81879 + (1));
+i__81879 = G__81887;
 continue;
 } else {
 return true;
@@ -818,16 +829,16 @@ return true;
 break;
 }
 })()){
-return cljs.core.chunk_cons.call(null,cljs.core.chunk.call(null,b__50892),spaceinvaders$core$move_stars_$_iter__50889.call(null,cljs.core.chunk_rest.call(null,s__50890__$2)));
+return cljs.core.chunk_cons.call(null,cljs.core.chunk.call(null,b__81880),spaceinvaders$core$move_stars_$_iter__81877.call(null,cljs.core.chunk_rest.call(null,s__81878__$2)));
 } else {
-return cljs.core.chunk_cons.call(null,cljs.core.chunk.call(null,b__50892),null);
+return cljs.core.chunk_cons.call(null,cljs.core.chunk.call(null,b__81880),null);
 }
 } else {
-var vec__50896 = cljs.core.first.call(null,s__50890__$2);
-var x = cljs.core.nth.call(null,vec__50896,(0),null);
-var y = cljs.core.nth.call(null,vec__50896,(1),null);
-var size = cljs.core.nth.call(null,vec__50896,(2),null);
-return cljs.core.cons.call(null,new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [x,cljs.core.mod.call(null,(0.8 + y),spaceinvaders.core.world_height),size], null),spaceinvaders$core$move_stars_$_iter__50889.call(null,cljs.core.rest.call(null,s__50890__$2)));
+var vec__81884 = cljs.core.first.call(null,s__81878__$2);
+var x = cljs.core.nth.call(null,vec__81884,(0),null);
+var y = cljs.core.nth.call(null,vec__81884,(1),null);
+var size = cljs.core.nth.call(null,vec__81884,(2),null);
+return cljs.core.cons.call(null,new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [x,cljs.core.mod.call(null,(0.8 + y),spaceinvaders.core.world_height),size], null),spaceinvaders$core$move_stars_$_iter__81877.call(null,cljs.core.rest.call(null,s__81878__$2)));
 }
 } else {
 return null;
@@ -849,10 +860,10 @@ spaceinvaders.core.update_ufos = (function spaceinvaders$core$update_ufos(ufos){
 var freq = (1);
 var new_ufos = ((spaceinvaders.core.add_new_QMARK_.call(null,ufos,spaceinvaders.core.max_ufos,freq))?cljs.core.conj.call(null,ufos,spaceinvaders.core.create_ufo.call(null)):ufos);
 return cljs.core.into.call(null,cljs.core.PersistentHashSet.EMPTY,cljs.core.map.call(null,((function (freq,new_ufos){
-return (function (p__50900){
-var vec__50901 = p__50900;
-var x = cljs.core.nth.call(null,vec__50901,(0),null);
-var y = cljs.core.nth.call(null,vec__50901,(1),null);
+return (function (p__81888){
+var vec__81889 = p__81888;
+var x = cljs.core.nth.call(null,vec__81889,(0),null);
+var y = cljs.core.nth.call(null,vec__81889,(1),null);
 return new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [spaceinvaders.core.rand_x.call(null,x),(y + spaceinvaders.core.vu)], null);
 });})(freq,new_ufos))
 ,new_ufos));
@@ -874,20 +885,20 @@ quil.core.text_size.call(null,(20));
 
 return spaceinvaders.core.init_state_BANG_.call(null);
 });
-spaceinvaders.core.update_state = (function spaceinvaders$core$update_state(p__50904){
-var map__50905 = p__50904;
-var map__50905__$1 = (((((!((map__50905 == null))))?(((((map__50905.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__50905.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.call(null,cljs.core.hash_map,map__50905):map__50905);
-var state = map__50905__$1;
-var ufos = cljs.core.get.call(null,map__50905__$1,new cljs.core.Keyword(null,"ufos","ufos",2106350236));
-var bombs = cljs.core.get.call(null,map__50905__$1,new cljs.core.Keyword(null,"bombs","bombs",1955561180));
-var state_counter = cljs.core.get.call(null,map__50905__$1,new cljs.core.Keyword(null,"state-counter","state-counter",494277693));
-var lifes = cljs.core.get.call(null,map__50905__$1,new cljs.core.Keyword(null,"lifes","lifes",-2077908604));
-var hits = cljs.core.get.call(null,map__50905__$1,new cljs.core.Keyword(null,"hits","hits",-2120002930));
-var game_state = cljs.core.get.call(null,map__50905__$1,new cljs.core.Keyword(null,"game-state","game-state",935682735));
-var tank = cljs.core.get.call(null,map__50905__$1,new cljs.core.Keyword(null,"tank","tank",-798661744));
-var missiles = cljs.core.get.call(null,map__50905__$1,new cljs.core.Keyword(null,"missiles","missiles",-600699149));
-var score = cljs.core.get.call(null,map__50905__$1,new cljs.core.Keyword(null,"score","score",-1963588780));
-var stars = cljs.core.get.call(null,map__50905__$1,new cljs.core.Keyword(null,"stars","stars",-556837771));
+spaceinvaders.core.update_state = (function spaceinvaders$core$update_state(p__81892){
+var map__81893 = p__81892;
+var map__81893__$1 = (((((!((map__81893 == null))))?(((((map__81893.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__81893.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.call(null,cljs.core.hash_map,map__81893):map__81893);
+var state = map__81893__$1;
+var ufos = cljs.core.get.call(null,map__81893__$1,new cljs.core.Keyword(null,"ufos","ufos",2106350236));
+var bombs = cljs.core.get.call(null,map__81893__$1,new cljs.core.Keyword(null,"bombs","bombs",1955561180));
+var state_counter = cljs.core.get.call(null,map__81893__$1,new cljs.core.Keyword(null,"state-counter","state-counter",494277693));
+var lifes = cljs.core.get.call(null,map__81893__$1,new cljs.core.Keyword(null,"lifes","lifes",-2077908604));
+var hits = cljs.core.get.call(null,map__81893__$1,new cljs.core.Keyword(null,"hits","hits",-2120002930));
+var game_state = cljs.core.get.call(null,map__81893__$1,new cljs.core.Keyword(null,"game-state","game-state",935682735));
+var tank = cljs.core.get.call(null,map__81893__$1,new cljs.core.Keyword(null,"tank","tank",-798661744));
+var missiles = cljs.core.get.call(null,map__81893__$1,new cljs.core.Keyword(null,"missiles","missiles",-600699149));
+var score = cljs.core.get.call(null,map__81893__$1,new cljs.core.Keyword(null,"score","score",-1963588780));
+var stars = cljs.core.get.call(null,map__81893__$1,new cljs.core.Keyword(null,"stars","stars",-556837771));
 var bg_state = cljs.core.update.call(null,state,new cljs.core.Keyword(null,"stars","stars",-556837771),spaceinvaders.core.move_stars);
 if(((cljs.core._EQ_.call(null,new cljs.core.Keyword(null,"playing","playing",70013335),game_state)) && ((lifes === (0))))){
 return cljs.core.assoc.call(null,bg_state,new cljs.core.Keyword(null,"game-state","game-state",935682735),new cljs.core.Keyword(null,"game-over","game-over",-607322695),new cljs.core.Keyword(null,"state-counter","state-counter",494277693),(0));
@@ -907,13 +918,13 @@ var ufos_exploded = cljs.core.into.call(null,cljs.core.PersistentHashSet.EMPTY,c
 var ufos_escaped = spaceinvaders.core.escaped.call(null,ufos);
 var ufos_remaining = clojure.set.difference.call(null,ufos,ufos_exploded,ufos_escaped);
 var ufos_next = spaceinvaders.core.update_ufos.call(null,ufos_remaining);
-var hits_new = cljs.core.into.call(null,cljs.core.PersistentHashSet.EMPTY,cljs.core.map.call(null,((function (explosions,ufos_exploded,ufos_escaped,ufos_remaining,ufos_next,bg_state,map__50905,map__50905__$1,state,ufos,bombs,state_counter,lifes,hits,game_state,tank,missiles,score,stars){
-return (function (p__50907){
-var vec__50908 = p__50907;
-var x = cljs.core.nth.call(null,vec__50908,(0),null);
-var y = cljs.core.nth.call(null,vec__50908,(1),null);
+var hits_new = cljs.core.into.call(null,cljs.core.PersistentHashSet.EMPTY,cljs.core.map.call(null,((function (explosions,ufos_exploded,ufos_escaped,ufos_remaining,ufos_next,bg_state,map__81893,map__81893__$1,state,ufos,bombs,state_counter,lifes,hits,game_state,tank,missiles,score,stars){
+return (function (p__81895){
+var vec__81896 = p__81895;
+var x = cljs.core.nth.call(null,vec__81896,(0),null);
+var y = cljs.core.nth.call(null,vec__81896,(1),null);
 return new cljs.core.PersistentArrayMap(null, 3, [new cljs.core.Keyword(null,"x","x",2099068185),x,new cljs.core.Keyword(null,"y","y",-1757859776),y,new cljs.core.Keyword(null,"counter","counter",804008177),(0)], null);
-});})(explosions,ufos_exploded,ufos_escaped,ufos_remaining,ufos_next,bg_state,map__50905,map__50905__$1,state,ufos,bombs,state_counter,lifes,hits,game_state,tank,missiles,score,stars))
+});})(explosions,ufos_exploded,ufos_escaped,ufos_remaining,ufos_next,bg_state,map__81893,map__81893__$1,state,ufos,bombs,state_counter,lifes,hits,game_state,tank,missiles,score,stars))
 ,ufos_exploded));
 var hits_next = spaceinvaders.core.update_hits.call(null,hits,hits_new);
 var missiles_exploded = cljs.core.into.call(null,cljs.core.PersistentHashSet.EMPTY,cljs.core.map.call(null,cljs.core.second,explosions));
@@ -940,19 +951,17 @@ var x__4219__auto__ = 0.0;
 var y__4220__auto__ = (speed - (1));
 return ((x__4219__auto__ > y__4220__auto__) ? x__4219__auto__ : y__4220__auto__);
 });
-spaceinvaders.core.key_handler = (function spaceinvaders$core$key_handler(p__50911,p__50912){
-var map__50913 = p__50911;
-var map__50913__$1 = (((((!((map__50913 == null))))?(((((map__50913.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__50913.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.call(null,cljs.core.hash_map,map__50913):map__50913);
-var state = map__50913__$1;
-var tank = cljs.core.get.call(null,map__50913__$1,new cljs.core.Keyword(null,"tank","tank",-798661744));
-var missiles = cljs.core.get.call(null,map__50913__$1,new cljs.core.Keyword(null,"missiles","missiles",-600699149));
-var game_state = cljs.core.get.call(null,map__50913__$1,new cljs.core.Keyword(null,"game-state","game-state",935682735));
-var map__50914 = p__50912;
-var map__50914__$1 = (((((!((map__50914 == null))))?(((((map__50914.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__50914.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.call(null,cljs.core.hash_map,map__50914):map__50914);
-var key = cljs.core.get.call(null,map__50914__$1,new cljs.core.Keyword(null,"key","key",-1516042587));
-var key_code = cljs.core.get.call(null,map__50914__$1,new cljs.core.Keyword(null,"key-code","key-code",-1732114304));
-console.log(cljs.core.pr_str.call(null,key_code));
-
+spaceinvaders.core.key_handler = (function spaceinvaders$core$key_handler(p__81899,p__81900){
+var map__81901 = p__81899;
+var map__81901__$1 = (((((!((map__81901 == null))))?(((((map__81901.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__81901.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.call(null,cljs.core.hash_map,map__81901):map__81901);
+var state = map__81901__$1;
+var tank = cljs.core.get.call(null,map__81901__$1,new cljs.core.Keyword(null,"tank","tank",-798661744));
+var missiles = cljs.core.get.call(null,map__81901__$1,new cljs.core.Keyword(null,"missiles","missiles",-600699149));
+var game_state = cljs.core.get.call(null,map__81901__$1,new cljs.core.Keyword(null,"game-state","game-state",935682735));
+var map__81902 = p__81900;
+var map__81902__$1 = (((((!((map__81902 == null))))?(((((map__81902.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__81902.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.call(null,cljs.core.hash_map,map__81902):map__81902);
+var key = cljs.core.get.call(null,map__81902__$1,new cljs.core.Keyword(null,"key","key",-1516042587));
+var key_code = cljs.core.get.call(null,map__81902__$1,new cljs.core.Keyword(null,"key-code","key-code",-1732114304));
 if(cljs.core._EQ_.call(null,new cljs.core.Keyword(null,"game-over","game-over",-607322695),game_state)){
 return state;
 } else {
@@ -1002,19 +1011,19 @@ return state;
 }
 }
 });
-spaceinvaders.core.draw_state = (function spaceinvaders$core$draw_state(p__50917){
-var map__50918 = p__50917;
-var map__50918__$1 = (((((!((map__50918 == null))))?(((((map__50918.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__50918.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.call(null,cljs.core.hash_map,map__50918):map__50918);
-var state = map__50918__$1;
-var ufos = cljs.core.get.call(null,map__50918__$1,new cljs.core.Keyword(null,"ufos","ufos",2106350236));
-var bombs = cljs.core.get.call(null,map__50918__$1,new cljs.core.Keyword(null,"bombs","bombs",1955561180));
-var lifes = cljs.core.get.call(null,map__50918__$1,new cljs.core.Keyword(null,"lifes","lifes",-2077908604));
-var hits = cljs.core.get.call(null,map__50918__$1,new cljs.core.Keyword(null,"hits","hits",-2120002930));
-var game_state = cljs.core.get.call(null,map__50918__$1,new cljs.core.Keyword(null,"game-state","game-state",935682735));
-var tank = cljs.core.get.call(null,map__50918__$1,new cljs.core.Keyword(null,"tank","tank",-798661744));
-var missiles = cljs.core.get.call(null,map__50918__$1,new cljs.core.Keyword(null,"missiles","missiles",-600699149));
-var score = cljs.core.get.call(null,map__50918__$1,new cljs.core.Keyword(null,"score","score",-1963588780));
-var stars = cljs.core.get.call(null,map__50918__$1,new cljs.core.Keyword(null,"stars","stars",-556837771));
+spaceinvaders.core.draw_state = (function spaceinvaders$core$draw_state(p__81905){
+var map__81906 = p__81905;
+var map__81906__$1 = (((((!((map__81906 == null))))?(((((map__81906.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__81906.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.call(null,cljs.core.hash_map,map__81906):map__81906);
+var state = map__81906__$1;
+var ufos = cljs.core.get.call(null,map__81906__$1,new cljs.core.Keyword(null,"ufos","ufos",2106350236));
+var bombs = cljs.core.get.call(null,map__81906__$1,new cljs.core.Keyword(null,"bombs","bombs",1955561180));
+var lifes = cljs.core.get.call(null,map__81906__$1,new cljs.core.Keyword(null,"lifes","lifes",-2077908604));
+var hits = cljs.core.get.call(null,map__81906__$1,new cljs.core.Keyword(null,"hits","hits",-2120002930));
+var game_state = cljs.core.get.call(null,map__81906__$1,new cljs.core.Keyword(null,"game-state","game-state",935682735));
+var tank = cljs.core.get.call(null,map__81906__$1,new cljs.core.Keyword(null,"tank","tank",-798661744));
+var missiles = cljs.core.get.call(null,map__81906__$1,new cljs.core.Keyword(null,"missiles","missiles",-600699149));
+var score = cljs.core.get.call(null,map__81906__$1,new cljs.core.Keyword(null,"score","score",-1963588780));
+var stars = cljs.core.get.call(null,map__81906__$1,new cljs.core.Keyword(null,"stars","stars",-556837771));
 cljs.core.apply.call(null,quil.core.background,new cljs.core.Keyword(null,"dark-blue","dark-blue",1793677975).cljs$core$IFn$_invoke$arity$1(spaceinvaders.core.colors));
 
 spaceinvaders.core.draw_stars_BANG_.call(null,stars);
@@ -1031,53 +1040,53 @@ spaceinvaders.core.draw_ufos_BANG_.call(null,ufos);
 
 spaceinvaders.core.draw_tank_BANG_.call(null,tank);
 
-var seq__50920_50924 = cljs.core.seq.call(null,hits);
-var chunk__50921_50925 = null;
-var count__50922_50926 = (0);
-var i__50923_50927 = (0);
+var seq__81908_81912 = cljs.core.seq.call(null,hits);
+var chunk__81909_81913 = null;
+var count__81910_81914 = (0);
+var i__81911_81915 = (0);
 while(true){
-if((i__50923_50927 < count__50922_50926)){
-var hit_50928 = cljs.core._nth.call(null,chunk__50921_50925,i__50923_50927);
-spaceinvaders.core.draw_explosion_BANG_.call(null,hit_50928);
+if((i__81911_81915 < count__81910_81914)){
+var hit_81916 = cljs.core._nth.call(null,chunk__81909_81913,i__81911_81915);
+spaceinvaders.core.draw_explosion_BANG_.call(null,hit_81916);
 
 
-var G__50929 = seq__50920_50924;
-var G__50930 = chunk__50921_50925;
-var G__50931 = count__50922_50926;
-var G__50932 = (i__50923_50927 + (1));
-seq__50920_50924 = G__50929;
-chunk__50921_50925 = G__50930;
-count__50922_50926 = G__50931;
-i__50923_50927 = G__50932;
+var G__81917 = seq__81908_81912;
+var G__81918 = chunk__81909_81913;
+var G__81919 = count__81910_81914;
+var G__81920 = (i__81911_81915 + (1));
+seq__81908_81912 = G__81917;
+chunk__81909_81913 = G__81918;
+count__81910_81914 = G__81919;
+i__81911_81915 = G__81920;
 continue;
 } else {
-var temp__5735__auto___50933 = cljs.core.seq.call(null,seq__50920_50924);
-if(temp__5735__auto___50933){
-var seq__50920_50934__$1 = temp__5735__auto___50933;
-if(cljs.core.chunked_seq_QMARK_.call(null,seq__50920_50934__$1)){
-var c__4550__auto___50935 = cljs.core.chunk_first.call(null,seq__50920_50934__$1);
-var G__50936 = cljs.core.chunk_rest.call(null,seq__50920_50934__$1);
-var G__50937 = c__4550__auto___50935;
-var G__50938 = cljs.core.count.call(null,c__4550__auto___50935);
-var G__50939 = (0);
-seq__50920_50924 = G__50936;
-chunk__50921_50925 = G__50937;
-count__50922_50926 = G__50938;
-i__50923_50927 = G__50939;
+var temp__5735__auto___81921 = cljs.core.seq.call(null,seq__81908_81912);
+if(temp__5735__auto___81921){
+var seq__81908_81922__$1 = temp__5735__auto___81921;
+if(cljs.core.chunked_seq_QMARK_.call(null,seq__81908_81922__$1)){
+var c__4550__auto___81923 = cljs.core.chunk_first.call(null,seq__81908_81922__$1);
+var G__81924 = cljs.core.chunk_rest.call(null,seq__81908_81922__$1);
+var G__81925 = c__4550__auto___81923;
+var G__81926 = cljs.core.count.call(null,c__4550__auto___81923);
+var G__81927 = (0);
+seq__81908_81912 = G__81924;
+chunk__81909_81913 = G__81925;
+count__81910_81914 = G__81926;
+i__81911_81915 = G__81927;
 continue;
 } else {
-var hit_50940 = cljs.core.first.call(null,seq__50920_50934__$1);
-spaceinvaders.core.draw_explosion_BANG_.call(null,hit_50940);
+var hit_81928 = cljs.core.first.call(null,seq__81908_81922__$1);
+spaceinvaders.core.draw_explosion_BANG_.call(null,hit_81928);
 
 
-var G__50941 = cljs.core.next.call(null,seq__50920_50934__$1);
-var G__50942 = null;
-var G__50943 = (0);
-var G__50944 = (0);
-seq__50920_50924 = G__50941;
-chunk__50921_50925 = G__50942;
-count__50922_50926 = G__50943;
-i__50923_50927 = G__50944;
+var G__81929 = cljs.core.next.call(null,seq__81908_81922__$1);
+var G__81930 = null;
+var G__81931 = (0);
+var G__81932 = (0);
+seq__81908_81912 = G__81929;
+chunk__81909_81913 = G__81930;
+count__81910_81914 = G__81931;
+i__81911_81915 = G__81932;
 continue;
 }
 } else {
@@ -1095,84 +1104,84 @@ return null;
 spaceinvaders.core.run_sketch = (function spaceinvaders$core$run_sketch(){
 spaceinvaders.core.spaceinvaders = (function spaceinvaders$core$run_sketch_$_spaceinvaders(){
 return quil.sketch.sketch.call(null,new cljs.core.Keyword(null,"host","host",-1558485167),"spaceinvaders",new cljs.core.Keyword(null,"features","features",-1146962336),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"keep-on-top","keep-on-top",-970284267)], null),new cljs.core.Keyword(null,"update","update",1045576396),((cljs.core.fn_QMARK_.call(null,spaceinvaders.core.update_state))?(function() { 
-var G__50945__delegate = function (args){
+var G__81933__delegate = function (args){
 return cljs.core.apply.call(null,spaceinvaders.core.update_state,args);
 };
-var G__50945 = function (var_args){
+var G__81933 = function (var_args){
 var args = null;
 if (arguments.length > 0) {
-var G__50946__i = 0, G__50946__a = new Array(arguments.length -  0);
-while (G__50946__i < G__50946__a.length) {G__50946__a[G__50946__i] = arguments[G__50946__i + 0]; ++G__50946__i;}
-  args = new cljs.core.IndexedSeq(G__50946__a,0,null);
+var G__81934__i = 0, G__81934__a = new Array(arguments.length -  0);
+while (G__81934__i < G__81934__a.length) {G__81934__a[G__81934__i] = arguments[G__81934__i + 0]; ++G__81934__i;}
+  args = new cljs.core.IndexedSeq(G__81934__a,0,null);
 } 
-return G__50945__delegate.call(this,args);};
-G__50945.cljs$lang$maxFixedArity = 0;
-G__50945.cljs$lang$applyTo = (function (arglist__50947){
-var args = cljs.core.seq(arglist__50947);
-return G__50945__delegate(args);
+return G__81933__delegate.call(this,args);};
+G__81933.cljs$lang$maxFixedArity = 0;
+G__81933.cljs$lang$applyTo = (function (arglist__81935){
+var args = cljs.core.seq(arglist__81935);
+return G__81933__delegate(args);
 });
-G__50945.cljs$core$IFn$_invoke$arity$variadic = G__50945__delegate;
-return G__50945;
+G__81933.cljs$core$IFn$_invoke$arity$variadic = G__81933__delegate;
+return G__81933;
 })()
 :spaceinvaders.core.update_state),new cljs.core.Keyword(null,"size","size",1098693007),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [spaceinvaders.core.world_width,spaceinvaders.core.world_height], null),new cljs.core.Keyword(null,"setup","setup",1987730512),((cljs.core.fn_QMARK_.call(null,spaceinvaders.core.setup))?(function() { 
-var G__50948__delegate = function (args){
+var G__81936__delegate = function (args){
 return cljs.core.apply.call(null,spaceinvaders.core.setup,args);
 };
-var G__50948 = function (var_args){
+var G__81936 = function (var_args){
 var args = null;
 if (arguments.length > 0) {
-var G__50949__i = 0, G__50949__a = new Array(arguments.length -  0);
-while (G__50949__i < G__50949__a.length) {G__50949__a[G__50949__i] = arguments[G__50949__i + 0]; ++G__50949__i;}
-  args = new cljs.core.IndexedSeq(G__50949__a,0,null);
+var G__81937__i = 0, G__81937__a = new Array(arguments.length -  0);
+while (G__81937__i < G__81937__a.length) {G__81937__a[G__81937__i] = arguments[G__81937__i + 0]; ++G__81937__i;}
+  args = new cljs.core.IndexedSeq(G__81937__a,0,null);
 } 
-return G__50948__delegate.call(this,args);};
-G__50948.cljs$lang$maxFixedArity = 0;
-G__50948.cljs$lang$applyTo = (function (arglist__50950){
-var args = cljs.core.seq(arglist__50950);
-return G__50948__delegate(args);
+return G__81936__delegate.call(this,args);};
+G__81936.cljs$lang$maxFixedArity = 0;
+G__81936.cljs$lang$applyTo = (function (arglist__81938){
+var args = cljs.core.seq(arglist__81938);
+return G__81936__delegate(args);
 });
-G__50948.cljs$core$IFn$_invoke$arity$variadic = G__50948__delegate;
-return G__50948;
+G__81936.cljs$core$IFn$_invoke$arity$variadic = G__81936__delegate;
+return G__81936;
 })()
 :spaceinvaders.core.setup),new cljs.core.Keyword(null,"middleware","middleware",1462115504),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [quil.middleware.fun_mode], null),new cljs.core.Keyword(null,"key-pressed","key-pressed",-757100364),((cljs.core.fn_QMARK_.call(null,spaceinvaders.core.key_handler))?(function() { 
-var G__50951__delegate = function (args){
+var G__81939__delegate = function (args){
 return cljs.core.apply.call(null,spaceinvaders.core.key_handler,args);
 };
-var G__50951 = function (var_args){
+var G__81939 = function (var_args){
 var args = null;
 if (arguments.length > 0) {
-var G__50952__i = 0, G__50952__a = new Array(arguments.length -  0);
-while (G__50952__i < G__50952__a.length) {G__50952__a[G__50952__i] = arguments[G__50952__i + 0]; ++G__50952__i;}
-  args = new cljs.core.IndexedSeq(G__50952__a,0,null);
+var G__81940__i = 0, G__81940__a = new Array(arguments.length -  0);
+while (G__81940__i < G__81940__a.length) {G__81940__a[G__81940__i] = arguments[G__81940__i + 0]; ++G__81940__i;}
+  args = new cljs.core.IndexedSeq(G__81940__a,0,null);
 } 
-return G__50951__delegate.call(this,args);};
-G__50951.cljs$lang$maxFixedArity = 0;
-G__50951.cljs$lang$applyTo = (function (arglist__50953){
-var args = cljs.core.seq(arglist__50953);
-return G__50951__delegate(args);
+return G__81939__delegate.call(this,args);};
+G__81939.cljs$lang$maxFixedArity = 0;
+G__81939.cljs$lang$applyTo = (function (arglist__81941){
+var args = cljs.core.seq(arglist__81941);
+return G__81939__delegate(args);
 });
-G__50951.cljs$core$IFn$_invoke$arity$variadic = G__50951__delegate;
-return G__50951;
+G__81939.cljs$core$IFn$_invoke$arity$variadic = G__81939__delegate;
+return G__81939;
 })()
 :spaceinvaders.core.key_handler),new cljs.core.Keyword(null,"draw","draw",1358331674),((cljs.core.fn_QMARK_.call(null,spaceinvaders.core.draw_state))?(function() { 
-var G__50954__delegate = function (args){
+var G__81942__delegate = function (args){
 return cljs.core.apply.call(null,spaceinvaders.core.draw_state,args);
 };
-var G__50954 = function (var_args){
+var G__81942 = function (var_args){
 var args = null;
 if (arguments.length > 0) {
-var G__50955__i = 0, G__50955__a = new Array(arguments.length -  0);
-while (G__50955__i < G__50955__a.length) {G__50955__a[G__50955__i] = arguments[G__50955__i + 0]; ++G__50955__i;}
-  args = new cljs.core.IndexedSeq(G__50955__a,0,null);
+var G__81943__i = 0, G__81943__a = new Array(arguments.length -  0);
+while (G__81943__i < G__81943__a.length) {G__81943__a[G__81943__i] = arguments[G__81943__i + 0]; ++G__81943__i;}
+  args = new cljs.core.IndexedSeq(G__81943__a,0,null);
 } 
-return G__50954__delegate.call(this,args);};
-G__50954.cljs$lang$maxFixedArity = 0;
-G__50954.cljs$lang$applyTo = (function (arglist__50956){
-var args = cljs.core.seq(arglist__50956);
-return G__50954__delegate(args);
+return G__81942__delegate.call(this,args);};
+G__81942.cljs$lang$maxFixedArity = 0;
+G__81942.cljs$lang$applyTo = (function (arglist__81944){
+var args = cljs.core.seq(arglist__81944);
+return G__81942__delegate(args);
 });
-G__50954.cljs$core$IFn$_invoke$arity$variadic = G__50954__delegate;
-return G__50954;
+G__81942.cljs$core$IFn$_invoke$arity$variadic = G__81942__delegate;
+return G__81942;
 })()
 :spaceinvaders.core.draw_state));
 });
@@ -1188,4 +1197,4 @@ return quil.sketch.add_sketch_to_init_list.call(null,new cljs.core.PersistentArr
 });
 goog.exportSymbol('spaceinvaders.core.run_sketch', spaceinvaders.core.run_sketch);
 
-//# sourceMappingURL=core.js.map?rel=1594891322749
+//# sourceMappingURL=core.js.map?rel=1594910460211
