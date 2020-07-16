@@ -9,3 +9,5 @@ pom.xml.asc
 /.nrepl-port
 figwheel_server.log
  resources/public/js/*
+ resources/public/js/development/spaceinvaders/*
+resources/public/js/development/spaceinvaders/

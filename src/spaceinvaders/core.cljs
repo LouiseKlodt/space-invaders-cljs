@@ -19,8 +19,10 @@
 ;; constants
 
 ; canvas
-(def world-height 600)
-(def world-width 800)
+(def world-height 500)
+(def world-width 500)
+(def margin 24)
+(def offset 4)
 
 ; ufos
 (def vu 3)
@@ -32,7 +34,8 @@
 (def wt 42)
 (def wt2 (/ wt 2))
 (def ht (* 0.4 wt))
-(def yt (- world-height ht))
+(def yt (- world-height ht margin offset))
+
 
 ; missiles
 (def wm (* 0.4 wt))
@@ -41,8 +44,6 @@
 ; bombs
 (def wb (* 0.2 size-ufo))
 (def max-bombs 1)
-
-(def top-margin 24)
 
 (def frame-rate 30)
 
@@ -93,7 +94,7 @@
   (apply q/fill (:orange colors))
   (let [missile-img #(q/quad 0.5 0.2 1 1 0.5 0.7 0 1)]
     (doseq [[x y] missiles]
-      ((qt/at x y (qt/in wm wm missile-img)))))
+      ((qt/at (- (+ x (/ wt 2)) (/ wm 2)) y (qt/in wm wm missile-img)))))
   (q/pop-style))
 
 (defn draw-bombs! [bombs]
@@ -151,7 +152,7 @@
   "Draws a munitions status bar in the top right corner, indicating available tank missiles."
   (let [w (* 12 max-missiles)
         x0 (- world-width (* 1.1 w))]
-    ((qt/at x0 top-margin (qt/in w w (munition-img n-missiles))))))
+    ((qt/at x0 margin (qt/in w w (munition-img n-missiles))))))
 
 ; Keyword -> Image
 (defn ufo-img [color]
@@ -170,34 +171,23 @@
   (q/pop-style))
 
 (defn tank-img []
-  (q/no-stroke)
   (q/rect 0.475 0.0 0.05 0.2)
   (q/rect 0.4 0.15 0.2 0.2)
   (q/rect 0.1 0.35 0.8 0.2)
-  (q/rect 0.05 0.5 0.9 0.5))
+  (q/rect 0.0 0.5 1 0.5))
 
 ; Tank -> Image
 (defn draw-tank! [tank]
   (q/push-style)
+  (q/no-stroke)
   (apply q/fill (:blue colors))
   ((qt/at (:x tank) yt (qt/in wt ht tank-img)))
-  ;(q/rect (:x tank) yt wt ht)
   (q/pop-style))
 
 (defn draw-menu! [score lifes]
   (q/push-style)
   (q/fill 255)
-  (let [lifes-y (* 2 top-margin)]
-    (q/text (str "score: " score) top-margin top-margin)
-    (q/text (str "lifes: " lifes) top-margin lifes-y))
-  (q/pop-style))
-
-; Number -> Image
-(defn draw-score! [score]
-  (q/push-style)
-  (q/fill 255)
-  (let [txt-pos top-margin]
-    (q/text (str "score: " score) txt-pos txt-pos))
+  (q/text (str "SCORE <" score ">") margin margin)
   (q/pop-style))
 
 (defn flash-ufo! [x y counter]
@@ -367,7 +357,7 @@
   (q/frame-rate frame-rate)
   (apply q/background (:dark-blue colors))
   (q/text-font "VT323-Regular")
-  (q/text-size 20)
+  (q/text-size 24)
   (init-state!))
 
 ; State -> State
@@ -424,14 +414,38 @@
              (= up key-code) (update-in state [:tank :speed] speed-up)
              (= down key-code) (update-in state [:tank :speed] speed-down)
              (= :space key) (if (< (count missiles) max-missiles)
-                              (update state :missiles conj [(:x tank) (- world-height wt2)])
+                              (update state :missiles conj [(:x tank) yt])
                               state)
              :else state))))
+;
+; (defn draw-menu! [score lifes]
+;   (q/push-style)
+;   (q/fill 255)
+;   (let [lifes-y (* 2 margin)]
+;     (q/text (str "score: " score) margin margin)
+;     (q/text (str "lifes: " lifes) margin lifes-y))
+;   (q/pop-style))
+
+(defn draw-info-panel! [lifes n-missiles]
+  (q/push-style)
+  ;; draw horizontal line
+  (apply q/stroke (:guppie-green colors))
+  (q/stroke-weight 2)
+  (let [y-line (- world-height margin)
+        y-items (+ y-line (* 0.8 margin))]
+    (q/line 0.0 y-line world-width y-line)
+    (q/fill 255)
+    (q/no-stroke)
+    (q/text (str lifes) margin y-items)
+    (doseq [i (range lifes)] ; 0 1 2
+      (let [w 20 gap 5 x0 80 y0 y-items]
+        ((qt/at (+ 40 (* i (+ 30 10))) 480 (qt/in 30 15 tank-img))))))
+  (q/pop-style))
 
 (defn draw-state [{:keys [score tank missiles bombs ufos hits stars lifes game-state]
                    :as state}]
     (apply q/background (:dark-blue colors))
-  ;  ((qt/at 100 80 (qt/in 40 40 alien-img)))
+    (draw-info-panel! lifes (count missiles))
     (draw-stars! stars)
     (draw-missiles! missiles)
     (draw-bombs! bombs)
