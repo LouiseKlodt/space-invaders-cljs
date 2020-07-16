@@ -13,7 +13,6 @@
 ; ability to gain a life e.g 100 pts -> 1 life
 ; draw bombs
 ; animate when the tank gets hit / life lost
-; move menu to the bottom
 
 ;; ----------------------------------------------------------------------------
 ;; constants
@@ -55,6 +54,7 @@
              :blue [26, 129, 236]
              :light-blue [196, 232, 246]
              :gray [103, 103, 102]
+             :light-gray [190, 184, 175]
              :yellow-rose [254, 240, 1]
              :electric-red [240, 5, 5]
              :dogwood-rose [215, 25, 111]
@@ -99,7 +99,7 @@
 
 (defn draw-bombs! [bombs]
   (q/push-style)
-  (apply q/fill (:red colors))
+  (apply q/fill (:blue colors))
   (let [w (* 0.24 size-ufo)]
     (doseq [[x y] bombs]
       (q/ellipse x y w w)))
@@ -124,13 +124,6 @@
   (q/rect 0.6 0.3 0.1 0.1)
   (q/pop-style))
 
-(defn xdraw-bombs! [bombs]
-  (q/push-style)
-  (apply q/fill (:red colors))
-  (let [w (* 0.8 size-ufo)]
-    (doseq [[x y] bombs]
-      ((qt/at x y (qt/in w w alien-img)))))
-  (q/pop-style))
 
 ; Number -> fn
 (defn munition-img [n-missiles]
@@ -147,13 +140,6 @@
         (q/ellipse (+ (/ w 2) (* n (+ w spacing))) 0 w w)))
     (q/pop-style)))
 
-; Number -> Image
-(defn draw-munitions! [n-missiles]
-  "Draws a munitions status bar in the top right corner, indicating available tank missiles."
-  (let [w (* 12 max-missiles)
-        x0 (- world-width (* 1.1 w))]
-    ((qt/at x0 margin (qt/in w w (munition-img n-missiles))))))
-
 ; Keyword -> Image
 (defn ufo-img [color]
   (fn []
@@ -164,10 +150,10 @@
 ; [Ufo] -> Image
 (defn draw-ufos! [ufos]
   (q/push-style)
-  (apply q/fill (:green colors))
+  (apply q/fill (:guppie-green colors))
   (q/stroke-weight 1)
   (doseq [[xu yu] ufos]
-    ((qt/at xu yu (qt/in size-ufo size-ufo (ufo-img :green)))))
+    ((qt/at xu yu (qt/in size-ufo size-ufo (ufo-img :guppie-green)))))
   (q/pop-style))
 
 (defn tank-img []
@@ -180,7 +166,8 @@
 (defn draw-tank! [tank]
   (q/push-style)
   (q/no-stroke)
-  (apply q/fill (:blue colors))
+  (q/fill 255)
+  (apply q/fill (:light-gray colors))
   ((qt/at (:x tank) yt (qt/in wt ht tank-img)))
   (q/pop-style))
 
@@ -434,6 +421,7 @@
     (q/fill 255)
     (q/no-stroke)
     (q/text (str lifes) margin y-items)
+    (apply q/fill (:light-gray colors))
     (doseq [i (range lifes)]
       (let [w 30 gap 10 x0 40 y0 480]
         ((qt/at (+ x0 (* i (+ w gap))) y0 (qt/in w (/ w 2) tank-img)))))
@@ -449,7 +437,6 @@
     (draw-stars! stars)
     (draw-missiles! missiles)
     (draw-bombs! bombs)
-    ; (draw-munitions! (count missiles))
     (draw-score! score)
     (draw-ufos! ufos)
     (draw-tank! tank)
