@@ -13,6 +13,7 @@
 ; ability to gain a life e.g 100 pts -> 1 life
 ; draw bombs
 ; animate when the tank gets hit / life lost
+; move menu to the bottom
 
 ;; ----------------------------------------------------------------------------
 ;; constants
@@ -34,7 +35,7 @@
 (def yt (- world-height ht))
 
 ; missiles
-(def wm (* 0.2 wt))
+(def wm (* 0.4 wt))
 (def max-missiles 5)
 
 ; bombs
@@ -74,15 +75,15 @@
 (defn rand-x [x]
   "Returns random number within [x-delta x+delta] every 3rd frame, else x"
   (if (qt/n-ticks? 3)
-    (let [delta (* 0.24 size-ufo)]
+    (let [delta (* 0.1 size-ufo)]
       (int (rand-n (- x delta) (+ x delta))))
     x))
 
 ; Number  -> [[x y size]]
 (defn rand-stars [n]
-  "Returns a vector of random [x y size] that fit on the canvas."
+  "Returns a vector of n stars [x y size] that fit on the canvas."
   (vec (repeatedly n
-         #(vector (rand-n 0 world-width) (rand-n 0 world-height) (+ 1.0 (rand 3.0))))))
+        #(vector (rand-n 0 world-width) (rand-n 0 world-height) (+ 1.0 (rand 3.0))))))
 
 ;; ---------------------------------------------------------------------------
 ;; draw helper functions
@@ -90,10 +91,9 @@
 (defn draw-missiles! [missiles]
   (q/push-style)
   (apply q/fill (:orange colors))
-  (let [w (* 0.4 size-ufo) ; replace with wm ?
-        missile-img #(q/quad 0.5 0.2 1 1 0.5 0.7 0 1)]
+  (let [missile-img #(q/quad 0.5 0.2 1 1 0.5 0.7 0 1)]
     (doseq [[x y] missiles]
-      ((qt/at x y (qt/in w w missile-img)))))
+      ((qt/at x y (qt/in wm wm missile-img)))))
   (q/pop-style))
 
 (defn draw-bombs! [missiles]
@@ -308,23 +308,18 @@
     (into updated-hits new-hits)))
 
 ; Tank -> Tank
-(defn update-tank [{:keys [x dir] :as tank}]
-  "Moves tank dx pixels per frame, possibly reversing direction (1 -> right, -1 -> left)."
-  (let [dx 8
-        nxt-x (+ x (* dir dx))
+(defn move-tank [{:keys [x dir speed] :as tank}]
+  "Moves tank, reversing direction if not on screen."
+  (let [nxt-x (+ x (* dir speed))
         ouside-canvas? (fn [] (or (> nxt-x (- world-width wt)) (neg? nxt-x)))
-        dir-nxt (if (ouside-canvas?) (* -1 dir) dir)]
-    (assoc tank :x (+ (* dir-nxt dx) x) :dir dir-nxt)))
+        nxt-dir (if (ouside-canvas?) (* -1 dir) dir)]
+    (assoc tank :x (+ (* nxt-dir speed) x) :dir nxt-dir)))
 
-; [[x y size]] -> [[x y size]]
 (defn move-stars [stars]
-  "Moves each star's y-coord by offset down the canvas."
-  (let [offset 0.8]
-    (for [[x y size] stars]
-      [x (mod (+ offset y) world-height) size])))
+  (for [[x y size] stars]
+    [x (mod (+ 0.8 y) world-height) size]))
 
-; Void -> Ufo
-(defn new-ufo []
+(defn create-ufo []
   (let [margin (/ world-width 25)
         x (int (rand-n margin (- world-width margin)))
         y size-ufo2]
@@ -336,30 +331,32 @@
    by random x, and y down by vu."
   (let [freq 1
         new-ufos (if (add-new? ufos max-ufos freq)
-                   (conj ufos (new-ufo))
+                   (conj ufos (create-ufo))
                    ufos)]
     (into #{} (map (fn [[x y]] [(rand-x x) (+ y vu)]) new-ufos))))
 
+(defn create-tank []
+  {:x (/ world-width 2)
+   :dir 0
+   :speed 8.0})
+
 (defn init-state! []
-  (let [w2 (/ world-width 2)
-        stars (rand-stars 120)]
-    {:score 0
-     :lifes 3
-     :game-state :playing
-     :state-counter 0
-     :tank {:x w2 :dir 0}
-     :missiles #{}
-     :bombs #{}
-     :ufos #{[w2 size-ufo2]}
-     :hits #{}
-     :stars stars}))
+  {:score 0
+   :lifes 3
+   :game-state :playing
+   :state-counter 0
+   :tank (create-tank)
+   :missiles #{}
+   :hits #{}
+   :bombs #{}
+   :ufos #{}
+   :stars (rand-stars 120)})
 
 ;; ----------------------------------------------------------------------------
 ;; main program
 
 (defn setup []
   (q/frame-rate frame-rate)
-  (apply q/fill (:red colors))
   (apply q/background (:dark-blue colors))
   (q/text-font "VT323-Regular")
   (q/text-size 20)
@@ -368,7 +365,7 @@
 ; State -> State
 (defn update-state [{:keys [score tank missiles bombs ufos hits stars lifes game-state state-counter]
                      :as state}]
-  (let [bg-state (assoc state :stars (move-stars stars))]
+  (let [bg-state (update state :stars move-stars)]
     (cond
       (and (= :playing game-state) (zero? lifes)) (assoc bg-state :game-state :game-over :state-counter 0)
       (= :game-over game-state) (if (< state-counter 90)
@@ -391,7 +388,7 @@
                   score-next (+ score (count ufos-exploded) (- (count ufos-escaped)))
                   lifes-next (- lifes (count bombs-exploded))]
               (-> bg-state
-                (assoc :tank (update-tank tank))
+                (update :tank move-tank)
                 (assoc :missiles missiles-next)
                 (assoc :bombs bombs-next)
                 (assoc :ufos ufos-next)
@@ -399,21 +396,30 @@
                 (assoc :score score-next)
                 (assoc :lifes lifes-next))))))
 
+(defn speed-up [speed]
+  (min 16.0 (+ speed 1)))
+
+(defn speed-down [speed]
+  (max 0.0 (- speed 1)))
+
 (defn key-handler [{:keys [tank missiles game-state] :as state} {key :key key-code :key-code}]
-  (cond
-    (= :game-over game-state) state
-    (= :ready game-state) (cond
-                            (= :q key) (q/exit)
-                            (q/key-pressed?) (init-state!)
-                            :else state)
-     :else (let [left 37 right 39]
-             (cond
-              (= right key-code) (assoc-in state [:tank :dir] 1)
-              (= left key-code) (assoc-in state [:tank :dir] -1)
-              (= :space key) (if (< (count missiles) max-missiles)
-                               (update state :missiles conj [(:x tank) (- world-height wt2)])
-                               state)
-              :else state))))
+ (.log js/console (pr-str key-code))
+ (cond
+   (= :game-over game-state) state
+   (= :ready game-state) (cond
+                           (= :q key) (q/exit)
+                           (q/key-pressed?) (init-state!)
+                           :else state)
+    :else (let [left 37 right 39 up 38 down 40]
+            (cond
+             (= right key-code) (assoc-in state [:tank :dir] 1)
+             (= left key-code) (assoc-in state [:tank :dir] -1)
+             (= up key-code) (update-in state [:tank :speed] speed-up)
+             (= down key-code) (update-in state [:tank :speed] speed-down)
+             (= :space key) (if (< (count missiles) max-missiles)
+                              (update state :missiles conj [(:x tank) (- world-height wt2)])
+                              state)
+             :else state))))
 
 (defn draw-state [{:keys [score tank missiles bombs ufos hits stars lifes game-state]
                    :as state}]
