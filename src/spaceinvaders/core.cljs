@@ -184,7 +184,7 @@
   ((qt/at (:x tank) yt (qt/in wt ht tank-img)))
   (q/pop-style))
 
-(defn draw-menu! [score lifes]
+(defn draw-score! [score]
   (q/push-style)
   (q/fill 255)
   (q/text (str "SCORE <" score ">") margin margin)
@@ -224,10 +224,8 @@
   ;       bg-color (nth [:dark-blue :red] flash)]
   ;   (q/fill (bg-color colors)))
   (q/fill (:dark-blue colors))
-  (apply q/stroke (:guppie-green colors))
-  ; (q/stroke-weight 0.008)
   (q/rect 0 0 1 1)
-  (q/stroke 255)
+  (q/no-stroke)
   (q/fill 255)
   (q/text-size 0.2)
   (q/text "GAME OVER" 0.16 0.3)
@@ -239,9 +237,15 @@
   (q/pop-style))
 
 (defn draw-game-over! []
-  ((qt/at (* 0.25 world-width) (* 0.25 world-height)
-     (qt/in (* 0.5 world-width) (* 0.375 world-height) game-over-img))))
-
+  (let [p0 (* 0.25 world-width) w (* 0.5 world-width) h (* 0.375 world-height)]
+    ((qt/at p0 p0
+       (qt/in w h game-over-img))
+     (q/push-style)
+     (q/no-fill)
+     (q/stroke-weight 6)
+     (apply q/stroke (:guppie-green colors))
+     (q/rect p0 p0 w h)
+     (q/pop-style))))
 ;; ---------------------------------------------------------------------------
 ;; update-state helper functions
 
@@ -417,14 +421,7 @@
                               (update state :missiles conj [(:x tank) yt])
                               state)
              :else state))))
-;
-; (defn draw-menu! [score lifes]
-;   (q/push-style)
-;   (q/fill 255)
-;   (let [lifes-y (* 2 margin)]
-;     (q/text (str "score: " score) margin margin)
-;     (q/text (str "lifes: " lifes) margin lifes-y))
-;   (q/pop-style))
+
 
 (defn draw-info-panel! [lifes n-missiles]
   (q/push-style)
@@ -437,22 +434,26 @@
     (q/fill 255)
     (q/no-stroke)
     (q/text (str lifes) margin y-items)
-    (doseq [i (range lifes)] ; 0 1 2
-      (let [w 20 gap 5 x0 80 y0 y-items]
-        ((qt/at (+ 40 (* i (+ 30 10))) 480 (qt/in 30 15 tank-img))))))
-  (q/pop-style))
+    (doseq [i (range lifes)]
+      (let [w 30 gap 10 x0 40 y0 480]
+        ((qt/at (+ x0 (* i (+ w gap))) y0 (qt/in w (/ w 2) tank-img)))))
+    (q/pop-style))
+  (let [w (* 12 max-missiles)
+        x0 (- world-width (* 1.1 w))]
+    ((qt/at x0 (- world-height 12) (qt/in w w (munition-img n-missiles))))))
 
 (defn draw-state [{:keys [score tank missiles bombs ufos hits stars lifes game-state]
                    :as state}]
     (apply q/background (:dark-blue colors))
-    (draw-info-panel! lifes (count missiles))
+
     (draw-stars! stars)
     (draw-missiles! missiles)
     (draw-bombs! bombs)
-    (draw-munitions! (count missiles))
-    (draw-menu! score lifes)
+    ; (draw-munitions! (count missiles))
+    (draw-score! score)
     (draw-ufos! ufos)
     (draw-tank! tank)
+    (draw-info-panel! lifes (count missiles))
     (doseq [hit hits]
       (draw-explosion! hit))
     (if (or (= :game-over game-state) (= :ready game-state))
