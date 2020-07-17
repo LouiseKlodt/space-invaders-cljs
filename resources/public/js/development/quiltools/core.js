@@ -14,10 +14,10 @@ return quil.core.current_graphics.call(null).drawingContext.lineWidth;
  */
 quiltools.core.spin = (function quiltools$core$spin(theta,p){
 return (function (){
-var tr__34415__auto__ = new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [theta], null);
+var tr__21767__auto__ = new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [theta], null);
 quil.core.push_matrix.call(null);
 
-try{cljs.core.apply.call(null,quil.core.rotate,tr__34415__auto__);
+try{cljs.core.apply.call(null,quil.core.rotate,tr__21767__auto__);
 
 return p.call(null);
 }finally {quil.core.pop_matrix.call(null);
@@ -28,10 +28,10 @@ return p.call(null);
  */
 quiltools.core.at = (function quiltools$core$at(x,y,p){
 return (function (){
-var tr__34409__auto__ = new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [x,y], null);
+var tr__21761__auto__ = new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [x,y], null);
 quil.core.push_matrix.call(null);
 
-try{quil.core.translate.call(null,tr__34409__auto__);
+try{quil.core.translate.call(null,tr__21761__auto__);
 
 return p.call(null);
 }finally {quil.core.pop_matrix.call(null);
@@ -70,4 +70,4 @@ quiltools.core.n_ticks_QMARK_ = (function quiltools$core$n_ticks_QMARK_(n){
 return quiltools.core.divides_QMARK_.call(null,quil.core.frame_count.call(null),n);
 });
 
-//# sourceMappingURL=core.js.map?rel=1594882623720
+//# sourceMappingURL=core.js.map?rel=1594984081101

@@ -3,7 +3,8 @@
             [quil.middleware :as m]
             [quiltools.core :as qt]
             [clojure.string :as str]
-            [clojure.set :as set]))
+            [clojure.set :as set]
+            [cljsjs.howler]))
 
 ; By Louise Klodt, July 2020
 
@@ -17,6 +18,9 @@
 ;; ----------------------------------------------------------------------------
 ;; constants
 
+; music
+; (def theme (sound/read-sound "/Users/louiseklodt/Music/space-invaders.mp3"))
+;(js/Howl.someFunction)
 ; canvas
 (def world-height 500)
 (def world-width 500)
@@ -177,7 +181,8 @@
   (q/text (str "SCORE <" score ">") margin margin)
   (q/pop-style))
 
-(defn flash-ufo! [x y counter]
+(defn flash-ufo! [x y counter bang]
+  (if (and bang (zero? counter)) (.play bang))
   (q/push-style)
   (let [blink-time 4
         colors [:yellow-rose :electric-red :aqua :rose-garnet]
@@ -188,12 +193,12 @@
 
 (defn descend-ufo! [x y counter]
   (let [dy (mod counter 30)]
-    (flash-ufo! x (+ y dy) counter)))
+    (flash-ufo! x (+ y dy) counter nil)))
 
 ; Hit -> Image
-(defn draw-explosion! [{:keys [x y counter] :as hit}]
+(defn draw-explosion! [{:keys [x y counter] :as hit} bang]
   (cond
-    (<= 0 counter 30) (flash-ufo! x y counter)
+    (<= 0 counter 30) (flash-ufo! x y counter bang)
     (<= 21 counter 60) (descend-ufo! x y counter)))
 
 ; [[x y size]] -> Image
@@ -339,7 +344,9 @@
    :hits #{}
    :bombs #{}
    :ufos #{}
-   :stars (rand-stars 120)})
+   :stars (rand-stars 120)
+   :mute false})
+   ;:music (js/bgsound)})
 
 ;; ----------------------------------------------------------------------------
 ;; main program
@@ -391,23 +398,28 @@
 (defn speed-down [speed]
   (max 0.0 (- speed 1)))
 
-(defn key-handler [{:keys [tank missiles game-state] :as state} {key :key key-code :key-code}]
+(defn key-handler [{:keys [tank missiles game-state music bang] :as state} {key :key key-code :key-code}]
  (cond
    (= :game-over game-state) state
    (= :ready game-state) (cond
                            (= :q key) (q/exit)
+                           (= :s key) (update state :mute not)
                            (q/key-pressed?) (init-state!)
                            :else state)
     :else (let [left 37 right 39 up 38 down 40]
             (cond
-             (= right key-code) (assoc-in state [:tank :dir] 1)
-             (= left key-code) (assoc-in state [:tank :dir] -1)
-             (= up key-code) (update-in state [:tank :speed] speed-up)
-             (= down key-code) (update-in state [:tank :speed] speed-down)
-             (= :space key) (if (< (count missiles) max-missiles)
-                              (update state :missiles conj [(:x tank) yt])
-                              state)
-             :else state))))
+              (= :s key) (-> state
+                             (update :mute not)
+                             (assoc :music (if music music (js/bgsound)))
+                             (assoc :bang (if bang bang (js/bangsound))))
+              (= right key-code) (assoc-in state [:tank :dir] 1)
+              (= left key-code) (assoc-in state [:tank :dir] -1)
+              (= up key-code) (update-in state [:tank :speed] speed-up)
+              (= down key-code) (update-in state [:tank :speed] speed-down)
+              (= :space key) (if (< (count missiles) max-missiles)
+                               (update state :missiles conj [(:x tank) yt])
+                               state)
+              :else state))))
 
 
 (defn draw-info-panel! [lifes n-missiles]
@@ -430,7 +442,7 @@
         x0 (- world-width (* 1.1 w))]
     ((qt/at x0 (- world-height 12) (qt/in w w (munition-img n-missiles))))))
 
-(defn draw-state [{:keys [score tank missiles bombs ufos hits stars lifes game-state]
+(defn draw-state [{:keys [score tank missiles bombs ufos hits stars lifes game-state mute music bang]
                    :as state}]
     (apply q/background (:dark-blue colors))
 
@@ -442,7 +454,10 @@
     (draw-tank! tank)
     (draw-info-panel! lifes (count missiles))
     (doseq [hit hits]
-      (draw-explosion! hit))
+      (draw-explosion! hit bang))
+    (if mute
+      (if (and music (.playing music)) (.pause music))
+      (if (and music (not (.playing music))) (.play music)))
     (if (or (= :game-over game-state) (= :ready game-state))
       (draw-game-over!)))
 

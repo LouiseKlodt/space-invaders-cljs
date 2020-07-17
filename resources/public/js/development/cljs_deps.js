@@ -39,4 +39,5 @@ goog.addDependency("../quil/middlewares/navigation_2d.js", ['quil.middlewares.na
 goog.addDependency("../quil/middlewares/fun_mode.js", ['quil.middlewares.fun_mode'], ['cljs.core', 'quil.core']);
 goog.addDependency("../quil/middleware.js", ['quil.middleware'], ['cljs.core', 'quil.middlewares.navigation_3d', 'quil.middlewares.navigation_2d', 'quil.middlewares.fun_mode']);
 goog.addDependency("../quiltools/core.js", ['quiltools.core'], ['cljs.core', 'quil.core', 'quil.middleware']);
-goog.addDependency("../spaceinvaders/core.js", ['spaceinvaders.core'], ['quiltools.core', 'cljs.core', 'clojure.set', 'quil.core', 'quil.middleware', 'clojure.string']);
+goog.addDependency("../cljsjs/howler/development/howler.inc.js", ['cljsjs.howler'], [], {'foreign-lib': true});
+goog.addDependency("../spaceinvaders/core.js", ['spaceinvaders.core'], ['quiltools.core', 'cljs.core', 'clojure.set', 'quil.core', 'quil.middleware', 'cljsjs.howler', 'clojure.string']);
