@@ -1,12 +1,16 @@
+;   Copyright (c) Louise Klodt. All rights reserved.
+
 (ns spaceinvaders.core
   (:require [quil.core :as q :include-macros true]
             [quil.middleware :as m]
             [quiltools.core :as qt]
             [clojure.string :as str]
             [clojure.set :as set]
-            [cljsjs.howler]))
-
-; By Louise Klodt, July 2020
+            [cljsjs.howler]
+            [spaceinvaders.stars :as stars]
+            [spaceinvaders.ufos :as ufos]
+            [spaceinvaders.tank :as tank]
+            [spaceinvaders.missiles :as missiles]))
 
 ;; TODO
 ; add sound
@@ -18,9 +22,6 @@
 ;; ----------------------------------------------------------------------------
 ;; constants
 
-; music
-; (def theme (sound/read-sound "/Users/louiseklodt/Music/space-invaders.mp3"))
-;(js/Howl.someFunction)
 ; canvas
 (def world-height 500)
 (def world-width 500)
@@ -38,7 +39,6 @@
 (def wt2 (/ wt 2))
 (def ht (* 0.4 wt))
 (def yt (- world-height ht margin offset))
-
 
 ; missiles
 (def wm (* 0.4 wt))
@@ -84,22 +84,16 @@
       (int (rand-n (- x delta) (+ x delta))))
     x))
 
-; Number  -> [[x y size]]
-(defn rand-stars [n]
-  "Returns a vector of n stars [x y size] that fit on the canvas."
-  (vec (repeatedly n
-        #(vector (rand-n 0 world-width) (rand-n 0 world-height) (+ 1.0 (rand 3.0))))))
-
 ;; ---------------------------------------------------------------------------
 ;; draw helper functions
 
-(defn draw-missiles! [missiles]
-  (q/push-style)
-  (apply q/fill (:orange colors))
-  (let [missile-img #(q/quad 0.5 0.2 1 1 0.5 0.7 0 1)]
-    (doseq [[x y] missiles]
-      ((qt/at (- (+ x (/ wt 2)) (/ wm 2)) y (qt/in wm wm missile-img)))))
-  (q/pop-style))
+; (defn draw-missiles! [missiles]
+;   (q/push-style)
+;   (apply q/fill (:orange colors))
+;   (let [missile-img #(q/quad 0.5 0.2 1 1 0.5 0.7 0 1)]
+;     (doseq [[x y] missiles]
+;       ((qt/at (- (+ x (/ wt 2)) (/ wm 2)) y (qt/in wm wm missile-img)))))
+;   (q/pop-style))
 
 (defn draw-bombs! [bombs]
   (q/push-style)
@@ -144,70 +138,10 @@
         (q/ellipse (+ (/ w 2) (* n (+ w spacing))) 0 w w)))
     (q/pop-style)))
 
-; Keyword -> Image
-(defn ufo-img [color]
-  (fn []
-    (apply q/fill (color colors))
-    (q/arc 0.5 0.2 0.6 0.4 q/PI q/TWO-PI :pie)
-    (q/ellipse 0.5 0.25 1 0.2)))
-
-; [Ufo] -> Image
-(defn draw-ufos! [ufos]
-  (q/push-style)
-  (apply q/fill (:guppie-green colors))
-  (q/stroke-weight 1)
-  (doseq [[xu yu] ufos]
-    ((qt/at xu yu (qt/in size-ufo size-ufo (ufo-img :guppie-green)))))
-  (q/pop-style))
-
-(defn tank-img []
-  (q/rect 0.475 0.0 0.05 0.2)
-  (q/rect 0.4 0.15 0.2 0.2)
-  (q/rect 0.1 0.35 0.8 0.2)
-  (q/rect 0.0 0.5 1 0.5))
-
-; Tank -> Image
-(defn draw-tank! [tank]
-  (q/push-style)
-  (q/no-stroke)
-  (q/fill 255)
-  (apply q/fill (:light-gray colors))
-  ((qt/at (:x tank) yt (qt/in wt ht tank-img)))
-  (q/pop-style))
-
 (defn draw-score! [score]
   (q/push-style)
   (q/fill 255)
   (q/text (str "SCORE <" score ">") margin margin)
-  (q/pop-style))
-
-(defn flash-ufo! [x y counter bang]
-  (if (and bang (zero? counter)) (.play bang))
-  (q/push-style)
-  (let [blink-time 4
-        colors [:yellow-rose :electric-red :aqua :rose-garnet]
-        phase (mod (quot counter blink-time) (count colors))
-        next-color (colors phase)]
-    ((qt/at x y (qt/in size-ufo size-ufo (ufo-img next-color)))))
-  (q/pop-style))
-
-(defn descend-ufo! [x y counter]
-  (let [dy (mod counter 30)]
-    (flash-ufo! x (+ y dy) counter nil)))
-
-; Hit -> Image
-(defn draw-explosion! [{:keys [x y counter] :as hit} bang]
-  (cond
-    (<= 0 counter 30) (flash-ufo! x y counter bang)
-    (<= 21 counter 60) (descend-ufo! x y counter)))
-
-; [[x y size]] -> Image
-(defn draw-stars! [stars]
-;  (.log js/console (pr-str stars))
-  (q/push-style)
-  (q/fill 255)
-  (doseq [[x y s] stars]
-    (q/ellipse x y s s))
   (q/pop-style))
 
 (defn game-over-img []
@@ -238,7 +172,7 @@
      (apply q/stroke (:guppie-green colors))
      (q/rect p0 p0 w h)
      (q/pop-style))))
-;; ---------------------------------------------------------------------------
+
 ;; update-state helper functions
 
 ; Set ->  Set
@@ -301,52 +235,18 @@
         updated-hits (into #{} (map (fn [hit] (update hit :counter inc)) remaining))]
     (into updated-hits new-hits)))
 
-; Tank -> Tank
-(defn move-tank [{:keys [x dir speed] :as tank}]
-  "Moves tank, reversing direction if not on screen."
-  (let [nxt-x (+ x (* dir speed))
-        ouside-canvas? (fn [] (or (> nxt-x (- world-width wt)) (neg? nxt-x)))
-        nxt-dir (if (ouside-canvas?) (* -1 dir) dir)]
-    (assoc tank :x (+ (* nxt-dir speed) x) :dir nxt-dir)))
-
-(defn move-stars [stars]
-  (for [[x y size] stars]
-    [x (mod (+ 0.8 y) world-height) size]))
-
-(defn create-ufo []
-  (let [margin (/ world-width 25)
-        x (int (rand-n margin (- world-width margin)))
-        y size-ufo2]
-    [x y]))
-
-; Ufos -> Ufos
-(defn update-ufos [ufos]
-  "Possibly adds a new ufo to ufos, every freq seconds, and moves each ufo
-   by random x, and y down by vu."
-  (let [freq 1
-        new-ufos (if (add-new? ufos max-ufos freq)
-                   (conj ufos (create-ufo))
-                   ufos)]
-    (into #{} (map (fn [[x y]] [(rand-x x) (+ y vu)]) new-ufos))))
-
-(defn create-tank []
-  {:x (/ world-width 2)
-   :dir 0
-   :speed 8.0})
-
 (defn init-state! []
   {:score 0
    :lifes 3
    :game-state :playing
    :state-counter 0
-   :tank (create-tank)
+   :tank (tank/create-tank)
    :missiles #{}
    :hits #{}
    :bombs #{}
    :ufos #{}
-   :stars (rand-stars 120)
+   :stars (stars/rand-stars 120 world-width world-height)
    :mute false})
-   ;:music (js/bgsound)})
 
 ;; ----------------------------------------------------------------------------
 ;; main program
@@ -361,7 +261,7 @@
 ; State -> State
 (defn update-state [{:keys [score tank missiles bombs ufos hits stars lifes game-state state-counter]
                      :as state}]
-  (let [bg-state (update state :stars move-stars)]
+  (let [bg-state (update state :stars stars/move-stars world-height)]
     (cond
       (and (= :playing game-state) (zero? lifes)) (assoc bg-state :game-state :game-over :state-counter 0)
       (= :game-over game-state) (if (< state-counter 90)
@@ -372,7 +272,7 @@
                   ufos-exploded (into #{} (map first explosions))
                   ufos-escaped (escaped ufos)
                   ufos-remaining (set/difference ufos ufos-exploded ufos-escaped)
-                  ufos-next (update-ufos ufos-remaining)
+                  ufos-next (ufos/update-ufos ufos-remaining size-ufo2 margin)
                   hits-new (into #{} (map (fn [[x y]] {:x x :y y :counter 0}) ufos-exploded))
                   hits-next (update-hits hits hits-new)
                   missiles-exploded (into #{} (map second explosions))
@@ -384,7 +284,7 @@
                   score-next (+ score (count ufos-exploded) (- (count ufos-escaped)))
                   lifes-next (- lifes (count bombs-exploded))]
               (-> bg-state
-                (update :tank move-tank)
+                (update :tank tank/move-tank)
                 (assoc :missiles missiles-next)
                 (assoc :bombs bombs-next)
                 (assoc :ufos ufos-next)
@@ -424,7 +324,6 @@
 
 (defn draw-info-panel! [lifes n-missiles]
   (q/push-style)
-  ;; draw horizontal line
   (apply q/stroke (:guppie-green colors))
   (q/stroke-weight 2)
   (let [y-line (- world-height margin)
@@ -436,7 +335,7 @@
     (apply q/fill (:light-gray colors))
     (doseq [i (range lifes)]
       (let [w 30 gap 10 x0 40 y0 480]
-        ((qt/at (+ x0 (* i (+ w gap))) y0 (qt/in w (/ w 2) tank-img)))))
+        ((qt/at (+ x0 (* i (+ w gap))) y0 (qt/in w (/ w 2) tank/tank-img)))))
     (q/pop-style))
   (let [w (* 12 max-missiles)
         x0 (- world-width (* 1.1 w))]
@@ -445,16 +344,15 @@
 (defn draw-state [{:keys [score tank missiles bombs ufos hits stars lifes game-state mute music bang]
                    :as state}]
     (apply q/background (:dark-blue colors))
-
-    (draw-stars! stars)
-    (draw-missiles! missiles)
+    (stars/draw-stars! stars)
+    (missiles/draw-missiles! missiles)
     (draw-bombs! bombs)
     (draw-score! score)
-    (draw-ufos! ufos)
-    (draw-tank! tank)
+    (ufos/draw-ufos! ufos size-ufo (:guppie-green colors))
+    (tank/draw-tank! tank)
     (draw-info-panel! lifes (count missiles))
     (doseq [hit hits]
-      (draw-explosion! hit bang))
+      (ufos/draw-explosion! hit bang size-ufo))
     (if mute
       (if (and music (.playing music)) (.pause music))
       (if (and music (not (.playing music))) (.play music)))
