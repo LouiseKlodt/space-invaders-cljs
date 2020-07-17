@@ -46,3 +46,9 @@
   (apply q/fill (:light-gray colors))
   ((qt/at (:x tank) yt (qt/in wt ht tank-img)))
   (q/pop-style))
+
+(defn speed-up [speed]
+  (min 16.0 (+ speed 1)))
+
+(defn speed-down [speed]
+  (max 0.0 (- speed 1)))

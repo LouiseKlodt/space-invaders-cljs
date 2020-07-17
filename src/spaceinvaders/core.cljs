@@ -87,14 +87,6 @@
 ;; ---------------------------------------------------------------------------
 ;; draw helper functions
 
-; (defn draw-missiles! [missiles]
-;   (q/push-style)
-;   (apply q/fill (:orange colors))
-;   (let [missile-img #(q/quad 0.5 0.2 1 1 0.5 0.7 0 1)]
-;     (doseq [[x y] missiles]
-;       ((qt/at (- (+ x (/ wt 2)) (/ wm 2)) y (qt/in wm wm missile-img)))))
-;   (q/pop-style))
-
 (defn draw-bombs! [bombs]
   (q/push-style)
   (apply q/fill (:blue colors))
@@ -121,22 +113,6 @@
   (q/rect 0.3 0.3 0.1 0.1)
   (q/rect 0.6 0.3 0.1 0.1)
   (q/pop-style))
-
-
-; Number -> fn
-(defn munition-img [n-missiles]
-  "Draw number of missiles available vs maximum allowed."
-  (fn []
-    (q/push-style)
-    (q/stroke 120) ; grey
-    (let [spacing 0.04
-          w (/ (- 1 (* spacing (dec max-missiles))) max-missiles)]
-      (doseq [n (range max-missiles)]
-        (if (< n n-missiles)
-          (q/no-fill)
-          (apply q/fill (:orange colors)))
-        (q/ellipse (+ (/ w 2) (* n (+ w spacing))) 0 w w)))
-    (q/pop-style)))
 
 (defn draw-score! [score]
   (q/push-style)
@@ -179,12 +155,6 @@
 (defn escaped [s]
   "Returns any items from set s that have left the scene."
   (into #{} (filter (fn [[_ y]] (or (> y world-height) (neg? y))) s)))
-
-; Missiles -> Missiles
-(defn update-missiles [missiles]
-  "Moves each missile up by dy."
-  (let [dy (* -2 vu)]
-    (into #{} (map (fn [[x y]] [x (+ dy y)]) missiles))))
 
 ; Set, Num, Num -> Bool
 (defn add-new? [s limit freq]
@@ -277,7 +247,7 @@
                   hits-next (update-hits hits hits-new)
                   missiles-exploded (into #{} (map second explosions))
                   missiles-remaining (set/difference missiles missiles-exploded (escaped missiles))
-                  missiles-next (update-missiles missiles-remaining)
+                  missiles-next (missiles/update-missiles missiles-remaining)
                   bombs-exploded (exploded bombs tank)
                   bombs-remaining (set/difference bombs bombs-exploded (escaped bombs))
                   bombs-next (update-bombs bombs-remaining ufos-remaining)
@@ -292,11 +262,7 @@
                 (assoc :score score-next)
                 (assoc :lifes lifes-next))))))
 
-(defn speed-up [speed]
-  (min 16.0 (+ speed 1)))
 
-(defn speed-down [speed]
-  (max 0.0 (- speed 1)))
 
 (defn key-handler [{:keys [tank missiles game-state music bang] :as state} {key :key key-code :key-code}]
  (cond
@@ -314,8 +280,8 @@
                              (assoc :bang (if bang bang (js/bangsound))))
               (= right key-code) (assoc-in state [:tank :dir] 1)
               (= left key-code) (assoc-in state [:tank :dir] -1)
-              (= up key-code) (update-in state [:tank :speed] speed-up)
-              (= down key-code) (update-in state [:tank :speed] speed-down)
+              (= up key-code) (update-in state [:tank :speed] tank/speed-up)
+              (= down key-code) (update-in state [:tank :speed] tank/speed-down)
               (= :space key) (if (< (count missiles) max-missiles)
                                (update state :missiles conj [(:x tank) yt])
                                state)
@@ -339,7 +305,7 @@
     (q/pop-style))
   (let [w (* 12 max-missiles)
         x0 (- world-width (* 1.1 w))]
-    ((qt/at x0 (- world-height 12) (qt/in w w (munition-img n-missiles))))))
+    ((qt/at x0 (- world-height 12) (qt/in w w (missiles/munition-img n-missiles))))))
 
 (defn draw-state [{:keys [score tank missiles bombs ufos hits stars lifes game-state mute music bang]
                    :as state}]
