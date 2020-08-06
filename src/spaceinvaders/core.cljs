@@ -89,7 +89,7 @@
 
 (defn draw-bombs! [bombs]
   (q/push-style)
-  (apply q/fill (:blue colors))
+  (apply q/fill (:light-gray colors))
   (let [w (* 0.24 size-ufo)]
     (doseq [[x y] bombs]
       (q/ellipse x y w w)))
