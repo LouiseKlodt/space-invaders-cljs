@@ -9,13 +9,14 @@
 ; ufos
 (def vu 3)
 
-(def colors {:orange [255, 149, 38]})
+(def colors {:orange [255, 149, 38] :rose-garnet [151, 2, 70] :light-gray [255, 255, 226]})
 
-(defn draw-missiles! [missiles]
+(defn draw-missiles! [missiles shoot]
   (q/push-style)
-  (apply q/fill (:orange colors))
+  (apply q/fill (:light-gray colors))
   (let [missile-img #(q/quad 0.5 0.2 1 1 0.5 0.7 0 1)]
     (doseq [[x y] missiles]
+      ; (.play shoot)
       ((qt/at (- (+ x (/ wt 2)) (/ wm 2)) y (qt/in wm wm missile-img)))))
   (q/pop-style))
 
@@ -29,7 +30,7 @@
       (doseq [n (range max-missiles)]
         (if (< n n-missiles)
           (q/no-fill)
-          (apply q/fill (:orange colors)))
+          (apply q/fill (:light-gray colors)))
         (q/ellipse (+ (/ w 2) (* n (+ w spacing))) 0 w w)))
     (q/pop-style)))
 

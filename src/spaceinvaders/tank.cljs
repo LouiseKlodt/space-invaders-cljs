@@ -18,7 +18,7 @@
 (def yt (- world-height ht margin offset))
 
 
-(def colors {:light-gray [190, 184, 175]})
+(def colors {:light-gray [190, 184, 175]}) ;:light-gray [255, 255, 226]
 
 (defn create-tank []
   {:x (/ world-width 2)

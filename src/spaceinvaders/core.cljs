@@ -264,7 +264,7 @@
 
 
 
-(defn key-handler [{:keys [tank missiles game-state music bang] :as state} {key :key key-code :key-code}]
+(defn key-handler [{:keys [tank missiles game-state music bang shoot] :as state} {key :key key-code :key-code}]
  (cond
    (= :game-over game-state) state
    (= :ready game-state) (cond
@@ -277,7 +277,8 @@
               (= :s key) (-> state
                              (update :mute not)
                              (assoc :music (if music music (js/bgsound)))
-                             (assoc :bang (if bang bang (js/bangsound))))
+                             (assoc :bang (if bang bang (js/bangsound)))
+                             (assoc :shoot (if shoot shoot (js/shootsound))))
               (= right key-code) (assoc-in state [:tank :dir] 1)
               (= left key-code) (assoc-in state [:tank :dir] -1)
               (= up key-code) (update-in state [:tank :speed] tank/speed-up)
@@ -307,23 +308,26 @@
         x0 (- world-width (* 1.1 w))]
     ((qt/at x0 (- world-height 12) (qt/in w w (missiles/munition-img n-missiles))))))
 
-(defn draw-state [{:keys [score tank missiles bombs ufos hits stars lifes game-state mute music bang]
+(defn draw-state [{:keys [score tank missiles bombs ufos hits stars lifes game-state mute music bang shoot]
                    :as state}]
-    (apply q/background (:dark-blue colors))
-    (stars/draw-stars! stars)
-    (missiles/draw-missiles! missiles)
-    (draw-bombs! bombs)
-    (draw-score! score)
-    (ufos/draw-ufos! ufos size-ufo (:guppie-green colors))
-    (tank/draw-tank! tank)
-    (draw-info-panel! lifes (count missiles))
-    (doseq [hit hits]
-      (ufos/draw-explosion! hit bang size-ufo))
-    (if mute
-      (if (and music (.playing music)) (.pause music))
-      (if (and music (not (.playing music))) (.play music)))
-    (if (or (= :game-over game-state) (= :ready game-state))
-      (draw-game-over!)))
+  (if mute
+    (if (and music (.playing music))
+      (.pause music)
+      (if (and music (not (.playing music)))
+        (.play music))))
+  (apply q/background (:dark-blue colors))
+  (stars/draw-stars! stars)
+  (missiles/draw-missiles! missiles shoot)
+  (draw-bombs! bombs)
+  (draw-score! score)
+  (ufos/draw-ufos! ufos size-ufo (:guppie-green colors))
+  (tank/draw-tank! tank)
+  (draw-info-panel! lifes (count missiles))
+  (doseq [hit hits]
+    (ufos/draw-explosion! hit bang size-ufo))
+
+  (if (or (= :game-over game-state) (= :ready game-state))
+    (draw-game-over!)))
 
 ; this function is called in index.html
 (defn ^:export run-sketch []
