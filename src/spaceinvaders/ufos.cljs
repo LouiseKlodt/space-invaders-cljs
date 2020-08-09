@@ -45,7 +45,6 @@
     (flash-ufo! x (+ y dy) counter nil size)))
 
 (defn draw-explosion! [{:keys [x y counter] :as hit} bang size]
-  (.log js/console (pr-str hit))
   (cond
     (<= 0 counter 30) (flash-ufo! x y counter bang size)
     (<= 21 counter 60) (descend-ufo! x y counter size)))
@@ -66,3 +65,11 @@
                    (conj ufos (create-ufo y0 margin))
                    ufos)]
     (into #{} (map (fn [[x y]] [(rand-x x) (+ y vu)]) new-ufos))))
+
+(defn update-hits [hits new-hits]
+  "Removes any hits that have finished animating; incrememts counter of remaining hits.
+   Then merges new hits into updated hits."
+  (let [end-counter 90 ; 3 seconds
+        remaining (remove (fn [hit] (>= (:counter hit) end-counter)) hits)
+        updated-hits (into #{} (map (fn [hit] (update hit :counter inc)) remaining))]
+    (into updated-hits new-hits)))
