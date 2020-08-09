@@ -1,5 +1,3 @@
-;   Copyright (c) Louise Klodt. All rights reserved.
-
 (ns spaceinvaders.core
   (:require [quil.core :as q :include-macros true]
             [quil.middleware :as m]
@@ -7,66 +5,17 @@
             [clojure.string :as str]
             [clojure.set :as set]
             [cljsjs.howler]
+            [spaceinvaders.globals :refer [wt ht yt wm max-missiles vu size-ufo size-ufo2 colors world-height world-width margin offset frame-rate]]
             [spaceinvaders.stars :as stars]
             [spaceinvaders.ufos :as ufos]
             [spaceinvaders.tank :as tank]
-            [spaceinvaders.missiles :as missiles]))
+            [spaceinvaders.missiles :as missiles]
+            [spaceinvaders.bombs :as bombs]
+            [spaceinvaders.helpers :as helpers]))
 
-;; TODO
-; add sound
-; speed up tank on double press -> within time interval
-; ability to gain a life e.g 100 pts -> 1 life
-; draw bombs
-; animate when the tank gets hit / life lost
-
-;; ----------------------------------------------------------------------------
-;; constants
-
-; canvas
-(def world-height 500)
-(def world-width 500)
-(def margin 24)
-(def offset 4)
-
-; ufos
-(def vu 3)
-(def size-ufo 42)
-(def size-ufo2 (/ size-ufo 2))
-(def max-ufos 7) ; max # of ufos allowed at once per frame
-
-; tank
-(def wt 42)
-(def wt2 (/ wt 2))
-(def ht (* 0.4 wt))
-(def yt (- world-height ht margin offset))
-
-; missiles
-(def wm (* 0.4 wt))
-(def max-missiles 5)
-
-; bombs
-(def wb (* 0.2 size-ufo))
-(def max-bombs 1)
-
-(def frame-rate 30)
-
-(def colors {:green [79, 175, 68]
-             :guppie-green [0, 204, 50]
-             :red [195, 0, 0]
-             :orange [255, 149, 38]
-             :light-yellow [253, 253, 151] ;[255, 253, 203]
-             :blue [26, 129, 236]
-             :light-blue [196, 232, 246]
-             :gray [103, 103, 102]
-             :light-gray [190, 184, 175]
-             :yellow-rose [254, 240, 1]
-             :electric-red [240, 5, 5]
-             :dogwood-rose [215, 25, 111]
-             :rose-garnet [151, 2, 70]
-             :kiwi [132, 231, 86]
-             :aqua [1, 255, 255]
-             :dark-blue [0, 23, 45]
-             :rich-black [0, 11, 24]})
+; ; bombs
+; (def wb (* 0.2 size-ufo))
+; (def max-bombs 1)
 
 ;; ----------------------------------------------------------------------------
 ;; helper functions
@@ -87,13 +36,13 @@
 ;; ---------------------------------------------------------------------------
 ;; draw helper functions
 
-(defn draw-bombs! [bombs]
-  (q/push-style)
-  (apply q/fill (:light-gray colors))
-  (let [w (* 0.24 size-ufo)]
-    (doseq [[x y] bombs]
-      (q/ellipse x y w w)))
-  (q/pop-style))
+; (defn draw-bombs! [bombs]
+;   (q/push-style)
+;   (apply q/fill (:light-gray colors))
+;   (let [w (* 0.24 size-ufo)]
+;     (doseq [[x y] bombs]
+;       (q/ellipse x y w w)))
+;   (q/pop-style))
 
 (defn alien-img []
   (q/push-style)
@@ -125,21 +74,20 @@
   ; (let [flash (mod (quot (q/frame-count) 10) 2)
   ;       bg-color (nth [:dark-blue :red] flash)]
   ;   (q/fill (bg-color colors)))
-  (q/fill (:dark-blue colors))
+  (q/fill 0)
   (q/rect 0 0 1 1)
-  (q/no-stroke)
+  (q/stroke 255)
   (q/fill 255)
-  (q/text-size 0.2)
-  (q/text "GAME OVER" 0.16 0.3)
-  (q/text-size 0.08)
+  (q/text-size 0.24)
+  (q/text "GAME OVER" 0.08 0.4)
+  (q/text-size 0.12)
   (q/fill 255)
   (q/stroke 255)
-  (q/text "Press q to exit" 0.25 0.625)
-  (q/text "Press any key to play again" 0.08 0.5)
+  (q/text "Press any key \nto play again" 0.2 0.6)
   (q/pop-style))
 
 (defn draw-game-over! []
-  (let [p0 (* 0.25 world-width) w (* 0.5 world-width) h (* 0.375 world-height)]
+  (let [p0 (* 0.1 world-width) w (* 0.8 world-width) h (* 0.4 world-height)]
     ((qt/at p0 p0
        (qt/in w h game-over-img))
      (q/push-style)
@@ -152,49 +100,49 @@
 ;; update-state helper functions
 
 ; Set ->  Set
-(defn escaped [s]
-  "Returns any items from set s that have left the scene."
-  (into #{} (filter (fn [[_ y]] (or (> y world-height) (neg? y))) s)))
+; (defn escaped [s]
+;   "Returns any items from set s that have left the scene."
+;   (into #{} (filter (fn [[_ y]] (or (> y world-height) (neg? y))) s)))
+;
+; ; Set, Num, Num -> Bool
+; (defn add-new? [s limit freq]
+;   "Returns true if a new item should be added to set s,
+;    given a limit and frequency at which it should be added. "
+;   (and
+;     (<= (count s) limit)
+;     (qt/n-ticks? (* freq frame-rate))))
 
-; Set, Num, Num -> Bool
-(defn add-new? [s limit freq]
-  "Returns true if a new item should be added to set s,
-   given a limit and frequency at which it should be added. "
-  (and
-    (<= (count s) limit)
-    (qt/n-ticks? (* freq frame-rate))))
+; (defn collision? [[xa ya] [xb yb] wa ha wb hb]
+;   "Returns true if b is colliding with a."
+;     (and (<= (- xb wa) xa (+ xb wb))
+;          (<= (- yb ha) ya (+ yb hb))))
 
-(defn collision? [[xa ya] [xb yb] wa ha wb hb]
-  "Returns true if b is colliding with a."
-    (and (<= (- xb wa) xa (+ xb wb))
-         (<= (- yb ha) ya (+ yb hb))))
-
-; #{Ufo}, #{Missile} -> [[Ufo, Missile]]
-(defn detect-explosions [ufos missiles]
-  "Returns list of [ufo missile] pairs which collided."
-   (vec (for [ufo ufos
-              missile missiles :when (collision? ufo missile size-ufo size-ufo wm wm)]
-          [ufo missile])))
+; ; #{Ufo}, #{Missile} -> [[Ufo, Missile]]
+; (defn detect-explosions [ufos missiles]
+;   "Returns list of [ufo missile] pairs which collided."
+;    (vec (for [ufo ufos
+;               missile missiles :when (collision? ufo missile size-ufo size-ufo wm wm)]
+;           [ufo missile])))
 
 ; Bombs, Tank -> Bombs
-(defn exploded [bombs {xt :x}]
-  "Returns list of bombs which hit the tank"
-  (into #{} (filter #(collision? [xt yt] % wt ht wb wb) bombs)))
+; (defn exploded [bombs {xt :x}]
+;   "Returns list of bombs which hit the tank"
+;   (into #{} (filter #(collision? [xt yt] % wt ht wb wb) bombs)))
 
-; Ufos -> Bomb
-(defn new-bomb [ufos]
-  (let [[x y] (rand-nth (vec ufos))]
-    [(+ size-ufo2 x) (+ size-ufo2 y)]))
+; ; Ufos -> Bomb
+; (defn new-bomb [ufos]
+;   (let [[x y] (rand-nth (vec ufos))]
+;     [(+ size-ufo2 x) (+ size-ufo2 y)]))
 
-; Bombs, Ufos -> Bombs
-(defn update-bombs [bombs ufos]
-  "Possibly adds new bomb to bombs, and moves each bomb down by dy."
-  (let [freq 1
-        new-bombs (if (and (seq ufos) (add-new? bombs max-bombs freq))
-                    (conj bombs (new-bomb ufos))
-                    bombs)
-        dy (* 3 vu)]
-    (into #{} (map (fn [[x y]] [x (+ dy y)]) new-bombs))))
+; ; Bombs, Ufos -> Bombs
+; (defn update-bombs [bombs ufos]
+;   "Possibly adds new bomb to bombs, and moves each bomb down by dy."
+;   (let [freq 1
+;         new-bombs (if (and (seq ufos) (add-new? bombs max-bombs freq))
+;                     (conj bombs (new-bomb ufos))
+;                     bombs)
+;         dy (* 3 vu)]
+;     (into #{} (map (fn [[x y]] [x (+ dy y)]) new-bombs))))
 
 ; #{Hit} -> #{Hit}
 (defn update-hits [hits new-hits]
@@ -238,19 +186,20 @@
                                   (update bg-state :state-counter inc)
                                   (assoc bg-state :game-state :ready))
       (= :ready game-state) bg-state
-      :else (let [explosions (detect-explosions ufos missiles)
+      :else (let [explosions (ufos/detect-explosions ufos missiles)
+                  _ (if (not (empty? explosions)) (.log js/console "explosions: " + explosions))
                   ufos-exploded (into #{} (map first explosions))
-                  ufos-escaped (escaped ufos)
+                  ufos-escaped (helpers/escaped ufos)
                   ufos-remaining (set/difference ufos ufos-exploded ufos-escaped)
                   ufos-next (ufos/update-ufos ufos-remaining size-ufo2 margin)
                   hits-new (into #{} (map (fn [[x y]] {:x x :y y :counter 0}) ufos-exploded))
                   hits-next (update-hits hits hits-new)
                   missiles-exploded (into #{} (map second explosions))
-                  missiles-remaining (set/difference missiles missiles-exploded (escaped missiles))
+                  missiles-remaining (set/difference missiles missiles-exploded (helpers/escaped missiles))
                   missiles-next (missiles/update-missiles missiles-remaining)
-                  bombs-exploded (exploded bombs tank)
-                  bombs-remaining (set/difference bombs bombs-exploded (escaped bombs))
-                  bombs-next (update-bombs bombs-remaining ufos-remaining)
+                  bombs-exploded (bombs/exploded bombs tank)
+                  bombs-remaining (set/difference bombs bombs-exploded (helpers/escaped bombs))
+                  bombs-next (bombs/update-bombs bombs-remaining ufos-remaining)
                   score-next (+ score (count ufos-exploded) (- (count ufos-escaped)))
                   lifes-next (- lifes (count bombs-exploded))]
               (-> bg-state
@@ -310,6 +259,7 @@
 
 (defn draw-state [{:keys [score tank missiles bombs ufos hits stars lifes game-state mute music bang shoot]
                    :as state}]
+  (if (not (empty? hits)) (.log js/console hits) )
   (if mute
     (if (and music (.playing music))
       (.pause music)
@@ -318,7 +268,7 @@
   (apply q/background (:dark-blue colors))
   (stars/draw-stars! stars)
   (missiles/draw-missiles! missiles shoot)
-  (draw-bombs! bombs)
+  (bombs/draw-bombs! bombs)
   (draw-score! score)
   (ufos/draw-ufos! ufos size-ufo (:guppie-green colors))
   (tank/draw-tank! tank)
@@ -340,3 +290,7 @@
     :draw draw-state
     :features [:keep-on-top]
     :middleware [m/fun-mode]))
+
+; TODO
+; ability to gain a life e.g 100 pts -> 1 life
+; animate when the tank gets hit / life lost
