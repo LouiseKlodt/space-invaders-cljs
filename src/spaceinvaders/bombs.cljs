@@ -27,6 +27,6 @@
         dy (* 3 vu)]
     (into #{} (map (fn [[x y]] [x (+ dy y)]) new-bombs))))
 
-(defn exploded [bombs {xt :x}]
-  "Returns list of bombs which hit the tank"
-  (into #{} (filter #(collision? [xt yt] % wt ht wb wb) bombs)))
+; (defn tank-collisions [bombs {xt :x}]
+;   "Returns list of bombs which hit the tank"
+;   (into #{} (filter #(collision? [xt yt] % wt ht wb wb) bombs)))

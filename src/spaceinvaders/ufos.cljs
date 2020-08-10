@@ -24,7 +24,8 @@
 
 (defn draw-ufos! [ufos size color]
   (q/push-style)
-  (q/stroke-weight 1)
+  (q/stroke-weight 0.5)
+  (q/stroke (:dark-blue colors))
   (apply q/fill color)
   (doseq [[xu yu] ufos]
     ((qt/at xu yu (qt/in size size (ufo-img color)))))
@@ -67,9 +68,11 @@
     (into #{} (map (fn [[x y]] [(rand-x x) (+ y vu)]) new-ufos))))
 
 (defn update-hits [hits new-hits]
-  "Removes any hits that have finished animating; incrememts counter of remaining hits.
-   Then merges new hits into updated hits."
   (let [end-counter 90 ; 3 seconds
         remaining (remove (fn [hit] (>= (:counter hit) end-counter)) hits)
         updated-hits (into #{} (map (fn [hit] (update hit :counter inc)) remaining))]
     (into updated-hits new-hits)))
+
+
+(defn ufo-tank-collisions [ufos tank]
+ 0)

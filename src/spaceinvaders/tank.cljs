@@ -3,6 +3,7 @@
             [quil.middleware :as m]
             [quiltools.core :as qt]
             [spaceinvaders.globals :refer [wt ht yt colors world-height world-width hbar-menu margin offset]]
+            [spaceinvaders.helpers :refer [collision?]]
             [clojure.string :as str]
             [clojure.set :as set]))
 
@@ -10,6 +11,12 @@
   {:x (/ world-width 2)
    :dir 0
    :speed 8.0})
+
+(defn speed-up [speed]
+  (min 16.0 (+ speed 1)))
+
+(defn speed-down [speed]
+  (max 0.0 (- speed 1)))
 
 (defn move-tank [{:keys [x dir speed] :as tank}]
   "Moves tank, reverses direction if outside screen."
@@ -42,8 +49,10 @@
       (let [w 30 gap 10 x0 (* 2 margin) y0 (- y-items (/ w 2))]
         ((qt/at (+ x0 (* i (+ w gap))) y0 (qt/in w (/ w 2) tank-img)))))))
 
-(defn speed-up [speed]
-  (min 16.0 (+ speed 1)))
+(defn tank-collisions [items w-item h-item {xt :x}]
+  "Returns list of items which hit the tank"
+  (into #{} (filter #(collision? [xt yt] % wt ht w-item h-item) items)))
 
-(defn speed-down [speed]
-  (max 0.0 (- speed 1)))
+; (defn tank-collisions [bombs {xt :x}]
+;   "Returns list of bombs which hit the tank"
+;   (into #{} (filter #(collision? [xt yt] % wt ht wb wb) bombs)))

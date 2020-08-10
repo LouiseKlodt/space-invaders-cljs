@@ -5,8 +5,8 @@
             [clojure.string :as str]
             [clojure.set :as set]
             [cljsjs.howler]
-            [spaceinvaders.globals :refer [wt ht yt wm max-missiles vu size-ufo
-                                           size-ufo2 colors world-height world-width margin offset frame-rate]]
+            [spaceinvaders.globals :refer [wt ht yt wb wm max-missiles vu size-ufo
+                                           size-ufo2 colors world-height world-width margin frame-rate]]
             [spaceinvaders.stars :as stars]
             [spaceinvaders.ufos :as ufos]
             [spaceinvaders.tank :as tank]
@@ -27,8 +27,6 @@
    :stars (stars/rand-stars 120 world-width world-height)
    :mute false})
 
-; main program
-
 (defn setup []
   (q/frame-rate frame-rate)
   (apply q/background (:dark-blue colors))
@@ -48,18 +46,19 @@
       :else (let [explosions (ufos/detect-explosions ufos missiles)
                   ufos-exploded (into #{} (map first explosions))
                   ufos-escaped (helpers/escaped ufos)
-                  ufos-remaining (set/difference ufos ufos-exploded ufos-escaped)
+                  ufo-tank-colls (tank/tank-collisions ufos size-ufo size-ufo tank)
+                  ufos-remaining (set/difference ufos ufos-exploded ufos-escaped ufo-tank-colls)
                   ufos-next (ufos/update-ufos ufos-remaining size-ufo2 margin)
                   hits-new (into #{} (map (fn [[x y]] {:x x :y y :counter 0}) ufos-exploded))
                   hits-next (ufos/update-hits hits hits-new)
                   missiles-exploded (into #{} (map second explosions))
                   missiles-remaining (set/difference missiles missiles-exploded (helpers/escaped missiles))
                   missiles-next (missiles/update-missiles missiles-remaining)
-                  bombs-exploded (bombs/exploded bombs tank)
-                  bombs-remaining (set/difference bombs bombs-exploded (helpers/escaped bombs))
+                  bomb-tank-colls (tank/tank-collisions bombs wb wb tank)
+                  bombs-remaining (set/difference bombs bomb-tank-colls (helpers/escaped bombs))
                   bombs-next (bombs/update-bombs bombs-remaining ufos-remaining)
                   score-next (+ score (count ufos-exploded) (- (count ufos-escaped)))
-                  lifes-next (- lifes (count bombs-exploded))]
+                  lifes-next (- lifes (count bomb-tank-colls) (count ufo-tank-colls))]
               (-> bg-state
                 (update :tank tank/move-tank)
                 (assoc :missiles missiles-next)
@@ -112,7 +111,6 @@
   (tank/draw-tank-menu! lifes)
   (doseq [hit hits]
     (ufos/draw-explosion! hit bang size-ufo))
-
   (if (or (= :game-over game-state) (= :ready game-state))
     (helpers/draw-game-over!)))
 
