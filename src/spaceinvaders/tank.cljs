@@ -2,7 +2,7 @@
   (:require [quil.core :as q :include-macros true]
             [quil.middleware :as m]
             [quiltools.core :as qt]
-            [spaceinvaders.globals :refer [wt ht yt colors world-height world-width margin offset]]
+            [spaceinvaders.globals :refer [wt ht yt colors world-height world-width hbar-menu margin offset]]
             [clojure.string :as str]
             [clojure.set :as set]))
 
@@ -31,6 +31,16 @@
   (apply q/fill (:light-gray colors))
   ((qt/at (:x tank) yt (qt/in wt ht tank-img)))
   (q/pop-style))
+
+(defn draw-tank-menu! [n-lifes]
+  (let [y-items (+ hbar-menu 22)]
+    (q/fill 255)
+    (q/no-stroke)
+    (q/text (str n-lifes) margin y-items)
+    (apply q/fill (:light-gray colors))
+    (doseq [i (range n-lifes)]
+      (let [w 30 gap 10 x0 (* 2 margin) y0 (- y-items (/ w 2))]
+        ((qt/at (+ x0 (* i (+ w gap))) y0 (qt/in w (/ w 2) tank-img)))))))
 
 (defn speed-up [speed]
   (min 16.0 (+ speed 1)))

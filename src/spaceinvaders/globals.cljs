@@ -1,11 +1,12 @@
 (ns spaceinvaders.globals)
 
 ; world
-(def world-height 500)
-(def world-width 500)
+(def world-height 520)
+(def world-width 780)
 (def margin 24)
 (def offset 4)
 (def frame-rate 30)
+(def hbar-menu (- world-height margin offset))
 
 ; tank
 (def wt 42)
@@ -14,7 +15,7 @@
 
 ; missiles
 (def wm (* 0.4 wt))
-(def max-missiles 5)
+(def max-missiles 7)
 
 ; UFOs
 (def vu 3)

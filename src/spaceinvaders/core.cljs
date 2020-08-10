@@ -5,7 +5,8 @@
             [clojure.string :as str]
             [clojure.set :as set]
             [cljsjs.howler]
-            [spaceinvaders.globals :refer [wt ht yt wm max-missiles vu size-ufo size-ufo2 colors world-height world-width margin offset frame-rate]]
+            [spaceinvaders.globals :refer [wt ht yt wm max-missiles vu size-ufo
+                                           size-ufo2 colors world-height world-width margin offset frame-rate]]
             [spaceinvaders.stars :as stars]
             [spaceinvaders.ufos :as ufos]
             [spaceinvaders.tank :as tank]
@@ -106,7 +107,9 @@
   (helpers/draw-score! score)
   (ufos/draw-ufos! ufos size-ufo (:guppie-green colors))
   (tank/draw-tank! tank)
-  (helpers/draw-info-panel! lifes (count missiles))
+  (helpers/draw-hbar!)
+  (missiles/draw-missiles-menu! (count missiles))
+  (tank/draw-tank-menu! lifes)
   (doseq [hit hits]
     (ufos/draw-explosion! hit bang size-ufo))
 
