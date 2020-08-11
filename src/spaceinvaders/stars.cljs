@@ -7,8 +7,9 @@
 
 (defn rand-stars [n w h]
   "Returns n stars [x y size] with x within [0, w] and y within [0, h]."
-  (vec (repeatedly n
-        #(vector (rand-n 0 w) (rand-n 0 h) (+ 1.0 (rand 3.0))))))
+  (let [star-size 2.0]
+    (vec (repeatedly n
+          #(vector (rand-n 0 w) (rand-n 0 h) (+ 1.0 (rand star-size)))))))
 
 (defn draw-stars! [stars]
   (q/push-style)

@@ -4,13 +4,29 @@
             [spaceinvaders.globals :refer [frame-rate wt yt ht wm max-missiles wb max-bombs vu colors size-ufo size-ufo2]]
             [spaceinvaders.helpers :refer [collision? add-new?]]))
 
+(defn bomb-img []
+  (q/push-style)
+  (q/no-stroke)
+;  (apply q/fill (:light-gray colors))
+  (q/rect 0.4 0.0 0.2 0.1)
+  (q/rect 0.2 0.1 0.6 0.1)
+  (q/rect 0.1 0.2 0.8 0.2)
+  (q/rect 0.0 0.4 1.0 0.2)
+  (q/rect 0.05 0.6 0.90 0.2)
+  (q/rect 0.15 0.8 0.7 0.1)
+  (q/rect 0.3 0.9 0.4 0.1)
+  (q/rect 0.4 0.95 0.2 0.1)
+  (q/pop-style))
+
 (defn draw-bombs! [bombs]
   (q/push-style)
+  (q/no-stroke)
   (apply q/fill (:light-gray colors))
-  (let [w (* 0.24 size-ufo)]
+  (let [w (* 0.3 size-ufo)]
     (doseq [[x y] bombs]
-      (q/ellipse x y w w)))
+      ((qt/at x y (qt/in w w bomb-img)))))
   (q/pop-style))
+
 
 ; Ufos -> Bomb
 (defn new-bomb [ufos]
@@ -26,7 +42,3 @@
                     bombs)
         dy (* 3 vu)]
     (into #{} (map (fn [[x y]] [x (+ dy y)]) new-bombs))))
-
-; (defn tank-collisions [bombs {xt :x}]
-;   "Returns list of bombs which hit the tank"
-;   (into #{} (filter #(collision? [xt yt] % wt ht wb wb) bombs)))

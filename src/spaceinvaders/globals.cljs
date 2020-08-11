@@ -11,7 +11,7 @@
 ; tank
 (def wt 42)
 (def ht (* 0.4 wt))
-(def yt (- world-height ht margin offset))
+(def yt (- world-height ht margin offset offset))
 
 ; missiles
 (def wm (* 0.4 wt))
@@ -35,7 +35,7 @@
              :light-yellow [253, 253, 151]
              :blue [26, 129, 236]
              :light-blue [196, 232, 246]
-             :gray [103, 103, 102]
+             :gray [104, 104, 104]
              :light-gray [190, 184, 175] ; [255, 255, 226]
              :yellow-rose [254, 240, 1]
              :electric-red [240, 5, 5]

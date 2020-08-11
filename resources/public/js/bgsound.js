@@ -1,10 +1,10 @@
-function bgsound() {
+function themesound() {
   console.log('bgsound!');
   var sound = new Howl({
     src: ['/static/space-invaders.mp3'],
     autoplay: false,
     loop: true,
-    volume: 0.56,
+    volume: 0.6,
     onend: function() {
       console.log('Finished!');
     }
@@ -14,9 +14,10 @@ function bgsound() {
 // var soundid = sound.play();
 
 function bangsound() {
+  console.log('bangsound!');
   var explosion = new Howl({
     src: ['/static/explosion.wav'],
-    volume: 0.72,
+    volume: 0.6,
     onend: function() {
       console.log('Explosion!');
     }
@@ -25,9 +26,10 @@ function bangsound() {
 }
 
 function shootsound() {
+  console.log('shootsound!');
   var shoot = new Howl({
     src: ['/static/shoot.wav'],
-    volume: 0.64,
+    volume: 0.6,
     onend: function() {
       console.log('Shooting!');
     }
