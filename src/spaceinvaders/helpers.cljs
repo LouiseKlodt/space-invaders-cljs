@@ -19,6 +19,11 @@
   "Returns any items from set s that have left the scene."
   (into #{} (filter (fn [[_ y]] (or (> y world-height) (neg? y))) s)))
 
+(defn update-hits [hits new-hits end-counter]
+  (let [remaining (remove (fn [hit] (>= (:counter hit) end-counter)) hits)
+        updated-hits (into #{} (map (fn [hit] (update hit :counter inc)) remaining))]
+    (into updated-hits new-hits)))
+
 ; draw helpers
 (defn draw-score! [score]
   (q/push-style)
@@ -28,10 +33,10 @@
 
 (defn game-over-img []
   (q/push-style)
-  (let [flash (mod (quot (q/frame-count) 10) 2)
-        bg-color (nth [:dark-blue :red] flash)]
-    (q/fill (bg-color colors)))
-  ;(q/fill 0)
+  ; (let [flash (mod (quot (q/frame-count) 10) 2)
+  ;       bg-color (nth [:dark-blue :red] flash)]
+  ;   (q/fill (bg-color colors)))
+  (q/fill 0)
   (q/rect 0 0 1 1)
   (q/stroke 255)
   (q/fill 255)

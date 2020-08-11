@@ -25,18 +25,19 @@
         nxt-dir (if (ouside-canvas?) (* -1 dir) dir)]
     (assoc tank :x (+ (* nxt-dir speed) x) :dir nxt-dir)))
 
-(defn tank-img []
-  (q/rect 0.475 0.0 0.05 0.2)
-  (q/rect 0.4 0.15 0.2 0.2)
-  (q/rect 0.1 0.35 0.8 0.2)
-  (q/rect 0.0 0.5 1 0.5))
+(defn tank-img [color]
+  (fn []
+    (apply q/fill color)
+    (q/rect 0.475 0.0 0.05 0.2)
+    (q/rect 0.4 0.15 0.2 0.2)
+    (q/rect 0.1 0.35 0.8 0.2)
+    (q/rect 0.0 0.5 1 0.5)))
 
 (defn draw-tank! [tank]
   (q/push-style)
   (q/no-stroke)
   (q/fill 255)
-  (apply q/fill (:light-gray colors))
-  ((qt/at (:x tank) yt (qt/in wt ht tank-img)))
+  ((qt/at (:x tank) yt (qt/in wt ht (tank-img (:light-gray colors)))))
   (q/pop-style))
 
 (defn draw-tank-menu! [n-lifes]
@@ -53,6 +54,9 @@
   "Returns list of items which hit the tank"
   (into #{} (filter #(collision? [xt yt] % wt ht w-item h-item) items)))
 
-; (defn tank-collisions [bombs {xt :x}]
-;   "Returns list of bombs which hit the tank"
-;   (into #{} (filter #(collision? [xt yt] % wt ht wb wb) bombs)))
+(defn draw-explosion! [tank]
+  (q/push-style)
+  (let [flash (mod (quot (q/frame-count) 5) 2)
+        tank-color (nth [:light-gray :red] flash)]
+    ((qt/at (:x tank) yt (qt/in wt ht (tank-img (colors tank-color))))))
+  (q/pop-style))

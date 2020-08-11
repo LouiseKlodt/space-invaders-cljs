@@ -23,6 +23,7 @@
 (def size-ufo2 (/ size-ufo 2))
 (def max-ufos 7) ; max # of ufos allowed on screen at once
 
+
 ; bombs
 (def wb (* 0.2 size-ufo))
 (def max-bombs 1)

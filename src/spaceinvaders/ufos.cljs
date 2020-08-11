@@ -18,9 +18,11 @@
 
 (defn ufo-img [color]
   (fn []
+    (q/push-style)
     (apply q/fill color)
     (q/arc 0.5 0.2 0.6 0.4 q/PI q/TWO-PI :pie)
-    (q/ellipse 0.5 0.25 1 0.2)))
+    (q/ellipse 0.5 0.25 1 0.2)
+    (q/pop-style)))
 
 (defn draw-ufos! [ufos size color]
   (q/push-style)
@@ -34,6 +36,8 @@
 (defn flash-ufo! [x y counter bang size]
   (if (and bang (zero? counter)) (.play bang))
   (q/push-style)
+  (q/stroke-weight 0.5)
+  (q/stroke (:dark-blue colors))
   (let [blink-time 4
         cs [:yellow-rose :electric-red :aqua :rose-garnet]
         phase (mod (quot counter blink-time) (count cs))
@@ -66,13 +70,3 @@
                    (conj ufos (create-ufo y0 margin))
                    ufos)]
     (into #{} (map (fn [[x y]] [(rand-x x) (+ y vu)]) new-ufos))))
-
-(defn update-hits [hits new-hits]
-  (let [end-counter 90 ; 3 seconds
-        remaining (remove (fn [hit] (>= (:counter hit) end-counter)) hits)
-        updated-hits (into #{} (map (fn [hit] (update hit :counter inc)) remaining))]
-    (into updated-hits new-hits)))
-
-
-(defn ufo-tank-collisions [ufos tank]
- 0)

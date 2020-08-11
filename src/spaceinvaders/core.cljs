@@ -22,6 +22,7 @@
    :tank (tank/create-tank)
    :missiles #{}
    :hits #{}
+   :tank-hits #{}
    :bombs #{}
    :ufos #{}
    :stars (stars/rand-stars 120 world-width world-height)
@@ -34,7 +35,7 @@
   (q/text-size 24)
   (init-state!))
 
-(defn update-state [{:keys [score tank missiles bombs ufos hits stars lifes game-state state-counter]
+(defn update-state [{:keys [score tank missiles bombs ufos hits tank-hits stars lifes game-state state-counter]
                      :as state}]
   (let [bg-state (update state :stars stars/move-stars world-height)]
     (cond
@@ -50,13 +51,15 @@
                   ufos-remaining (set/difference ufos ufos-exploded ufos-escaped ufo-tank-colls)
                   ufos-next (ufos/update-ufos ufos-remaining size-ufo2 margin)
                   hits-new (into #{} (map (fn [[x y]] {:x x :y y :counter 0}) ufos-exploded))
-                  hits-next (ufos/update-hits hits hits-new)
+                  hits-next (helpers/update-hits hits hits-new 90)
                   missiles-exploded (into #{} (map second explosions))
                   missiles-remaining (set/difference missiles missiles-exploded (helpers/escaped missiles))
                   missiles-next (missiles/update-missiles missiles-remaining)
                   bomb-tank-colls (tank/tank-collisions bombs wb wb tank)
                   bombs-remaining (set/difference bombs bomb-tank-colls (helpers/escaped bombs))
                   bombs-next (bombs/update-bombs bombs-remaining ufos-remaining)
+                  tank-hits-new (into #{} (map (fn [[x y]] {:x x :y y :counter 0}) (set/union ufo-tank-colls bomb-tank-colls)))
+                  tank-hits-next (helpers/update-hits tank-hits tank-hits-new 30)
                   score-next (+ score (count ufos-exploded) (- (count ufos-escaped)))
                   lifes-next (- lifes (count bomb-tank-colls) (count ufo-tank-colls))]
               (-> bg-state
@@ -65,6 +68,7 @@
                 (assoc :bombs bombs-next)
                 (assoc :ufos ufos-next)
                 (assoc :hits hits-next)
+                (assoc :tank-hits tank-hits-next)
                 (assoc :score score-next)
                 (assoc :lifes lifes-next))))))
 
@@ -92,7 +96,7 @@
                                state)
               :else state))))
 
-(defn draw-state [{:keys [score tank missiles bombs ufos hits stars lifes game-state mute music bang shoot]
+(defn draw-state [{:keys [score tank missiles bombs ufos hits tank-hits stars lifes game-state mute music bang shoot]
                    :as state}]
   (if mute
     (if (and music (.playing music))
@@ -112,7 +116,8 @@
   (doseq [hit hits]
     (ufos/draw-explosion! hit bang size-ufo))
   (if (or (= :game-over game-state) (= :ready game-state))
-    (helpers/draw-game-over!)))
+    (helpers/draw-game-over!)
+    (if (not (empty? tank-hits)) (tank/draw-explosion! tank))))
 
 ; this function is called in index.html
 (defn ^:export run-sketch []
