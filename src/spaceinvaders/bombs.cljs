@@ -7,7 +7,6 @@
 (defn bomb-img []
   (q/push-style)
   (q/no-stroke)
-;  (apply q/fill (:light-gray colors))
   (q/rect 0.4 0.0 0.2 0.1)
   (q/rect 0.2 0.1 0.6 0.1)
   (q/rect 0.1 0.2 0.8 0.2)
@@ -26,7 +25,6 @@
     (doseq [[x y] bombs]
       ((qt/at x y (qt/in w w bomb-img)))))
   (q/pop-style))
-
 
 ; Ufos -> Bomb
 (defn new-bomb [ufos]

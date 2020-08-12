@@ -5,60 +5,14 @@
             [clojure.string :as str]
             [clojure.set :as set]
             [cljsjs.howler]
-            [spaceinvaders.globals :refer [yt wb max-missiles size-ufo max-score
-                                           colors world-height world-width margin frame-rate]]
             [spaceinvaders.stars :as stars]
             [spaceinvaders.ufos :as ufos]
             [spaceinvaders.tank :as tank]
             [spaceinvaders.missiles :as missiles]
             [spaceinvaders.bombs :as bombs]
-            [spaceinvaders.helpers :as helpers]))
-
-(defn game-over-img []
-  (q/push-style)
-  ; (let [flash (mod (quot (q/frame-count) 10) 2)
-  ;       bg-color (nth [:dark-blue :red] flash)]
-  ;   (q/fill (bg-color colors)))
-  (q/fill 0)
-  (q/rect 0 0 1 1)
-  (q/stroke 255)
-  (q/fill 255)
-  (q/text-size 0.22)
-  (q/text "GAME OVER!" 0.08 0.32)
-  (q/text-size 0.1)
-  (q/text "THE UFOS HAVE TAKEN" 0.08 0.55)
-  (q/text "OVER THE PLANET!" 0.08 0.7)
-  (q/pop-style))
-
-(defn ready-img []
-  (q/push-style)
-  (let [flash (mod (quot (q/frame-count) 10) 2)
-        bg-color (nth [:dark-blue :red] flash)]
-    (q/fill (bg-color colors)))
-;  (q/fill 0)
-  (q/rect 0 0 1 1)
-  (q/stroke 255)
-  (q/fill 255)
-  (q/text-size 0.16)
-  (q/text "PRESS ANY KEY" 0.09 0.42)
-  ;(q/text-size 0.12)
-  (q/text "TO PLAY AGAIN" 0.09 0.61)
-  ;(q/text "TO PLAY AGAIN" 0.2 0.71)
-  (q/pop-style))
-
-(defn won-img []
-  (q/push-style)
-  (q/fill 0)
-  (q/rect 0 0 1 1)
-  (q/stroke 255)
-  (q/fill 255)
-  (q/text-size 0.22)
-  (q/text "WELL DONE!" 0.08 0.32)
-  (q/text-size 0.1)
-  (q/text "YOU HAVE SUCCESSFULLY" 0.08 0.55)
-  (q/text "DEFENDED THE PLANET!" 0.08 0.7)
-  (q/pop-style))
-
+            [spaceinvaders.helpers :as helpers]
+            [spaceinvaders.globals :refer [yt wb max-missiles size-ufo max-score colors
+                                           world-height world-width margin frame-rate]]))
 
 (defn init-state! []
   {:score 0
@@ -139,9 +93,6 @@
             (cond
               (= :s key) (-> state
                              (update :mute not))
-                             ; (assoc :bgmusic (if bgmusic bgmusic (js/bgsound)))
-                             ; (assoc :bang (if bgmusic bgmusic (js/bangsound)))
-                             ; (assoc :shoot (if shoot shoot (js/shootsound))))
               (= right key-code) (assoc-in state [:tank :dir] 1)
               (= left key-code) (assoc-in state [:tank :dir] -1)
               (= up key-code) (update-in state [:tank :speed] tank/speed-up)
@@ -153,7 +104,6 @@
 
 (defn draw-state [{:keys [score tank missiles bombs ufos hits tank-hits stars lifes game-state mute bgmusic bang shoot hiss]
                    :as state}]
-  ;(.log js/console (pr-str (:game-state state)))
   (if mute
     (if (.playing bgmusic)
       (.pause bgmusic))
@@ -175,9 +125,9 @@
     (tank/draw-explosion! hit tank hiss))
   (if (not (= :playing game-state)) (.fade bgmusic 1, 0, 1000))
   (cond
-    (= :game-over game-state) (helpers/draw-game-over! game-over-img)
-    (= :won game-state) (helpers/draw-game-over! won-img)
-    (= :ready game-state) (helpers/draw-game-over! ready-img)))
+    (= :game-over game-state) (helpers/draw-game-over! helpers/game-over-img)
+    (= :won game-state) (helpers/draw-game-over! helpers/game-won-img)
+    (= :ready game-state) (helpers/draw-game-over! helpers/game-ready-img)))
 
 
 ; this function is called in index.html

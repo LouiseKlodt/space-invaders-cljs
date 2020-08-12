@@ -3,6 +3,44 @@
             [quiltools.core :as qt]
             [spaceinvaders.globals :refer [hbar-menu margin frame-rate world-width world-height colors]]))
 
+(defn game-over-img []
+  (q/push-style)
+  (q/fill 0)
+  (q/rect 0 0 1 1)
+  (q/stroke 255)
+  (q/fill 255)
+  (q/text-size 0.22)
+  (q/text "GAME OVER!" 0.08 0.32)
+  (q/text-size 0.1)
+  (q/text "THE UFOS HAVE TAKEN" 0.08 0.55)
+  (q/text "OVER THE PLANET!" 0.08 0.7)
+  (q/pop-style))
+
+(defn game-ready-img []
+  (q/push-style)
+  (let [flash (mod (quot (q/frame-count) 10) 2)
+        bg-color (nth [:dark-blue :red] flash)]
+    (q/fill (bg-color colors)))
+  (q/rect 0 0 1 1)
+  (q/stroke 255)
+  (q/fill 255)
+  (q/text-size 0.16)
+  (q/text "PRESS ANY KEY" 0.09 0.32)
+  (q/text "TO PLAY AGAIN" 0.09 0.55)
+  (q/pop-style))
+
+(defn game-won-img []
+  (q/push-style)
+  (q/fill 0)
+  (q/rect 0 0 1 1)
+  (q/stroke 255)
+  (q/fill 255)
+  (q/text-size 0.22)
+  (q/text "WELL DONE!" 0.08 0.32)
+  (q/text-size 0.1)
+  (q/text "YOU HAVE SUCCESSFULLY" 0.08 0.55)
+  (q/text "DEFENDED THE PLANET!" 0.08 0.7)
+  (q/pop-style))
 
 (defn collision? [[xa ya] [xb yb] wa ha wb hb]
   "Is b colliding with a?"
