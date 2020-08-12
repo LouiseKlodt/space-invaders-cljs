@@ -9,12 +9,6 @@ pom.xml.asc
 /.nrepl-port
 figwheel_server.log
  resources/public/js/*
- resources/public/js/development/spaceinvaders/*
-resources/public/js/development/spaceinvaders/
 resources/public/.DS_Store
 .rebel_readline_history
-resources/public/js/development/cljs_deps.js
-resources/public/static/js/development/*
-	resources/public/js/development/*
 	
-resources/public/js/development/*
