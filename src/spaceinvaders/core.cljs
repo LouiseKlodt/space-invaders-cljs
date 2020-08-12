@@ -14,6 +14,52 @@
             [spaceinvaders.bombs :as bombs]
             [spaceinvaders.helpers :as helpers]))
 
+(defn game-over-img []
+  (q/push-style)
+  ; (let [flash (mod (quot (q/frame-count) 10) 2)
+  ;       bg-color (nth [:dark-blue :red] flash)]
+  ;   (q/fill (bg-color colors)))
+  (q/fill 0)
+  (q/rect 0 0 1 1)
+  (q/stroke 255)
+  (q/fill 255)
+  (q/text-size 0.22)
+  (q/text "GAME OVER!" 0.08 0.32)
+  (q/text-size 0.1)
+  (q/text "THE UFOS HAVE TAKEN" 0.08 0.55)
+  (q/text "OVER THE PLANET!" 0.08 0.7)
+  (q/pop-style))
+
+(defn ready-img []
+  (q/push-style)
+  (let [flash (mod (quot (q/frame-count) 10) 2)
+        bg-color (nth [:dark-blue :red] flash)]
+    (q/fill (bg-color colors)))
+;  (q/fill 0)
+  (q/rect 0 0 1 1)
+  (q/stroke 255)
+  (q/fill 255)
+  (q/text-size 0.16)
+  (q/text "PRESS ANY KEY" 0.09 0.42)
+  ;(q/text-size 0.12)
+  (q/text "TO PLAY AGAIN" 0.09 0.61)
+  ;(q/text "TO PLAY AGAIN" 0.2 0.71)
+  (q/pop-style))
+
+(defn won-img []
+  (q/push-style)
+  (q/fill 0)
+  (q/rect 0 0 1 1)
+  (q/stroke 255)
+  (q/fill 255)
+  (q/text-size 0.22)
+  (q/text "WELL DONE!" 0.08 0.32)
+  (q/text-size 0.1)
+  (q/text "YOU HAVE SUCCESSFULLY" 0.08 0.55)
+  (q/text "DEFENDED THE PLANET!" 0.08 0.7)
+  (q/pop-style))
+
+
 (defn init-state! []
   {:score 0
    :lifes 3
@@ -43,15 +89,15 @@
                      :as state}]
   (let [bg-state (update state :stars stars/move-stars world-height)]
     (cond
-      (and (= :playing game-state) (= max-score score)) (assoc bg-state :game-state :won)
+      (and (= :playing game-state) (= 10 score)) (assoc bg-state :game-state :won :state-counter 0)
       (and (= :playing game-state) (zero? lifes)) (assoc bg-state :game-state :game-over :state-counter 0)
-      (= :game-over game-state) (if (< state-counter 90)
-                                  (-> bg-state
-                                    (update :state-counter inc)
-                                    (assoc :tank-hits #{}))
-                                  (-> bg-state
-                                    (assoc :game-state :ready)))
-
+      (or (= :won game-state) (= :game-over game-state)) (if (< state-counter 90)
+                                                           (-> bg-state
+                                                             (update :state-counter inc)
+                                                             (assoc :tank-hits #{})
+                                                             (assoc :hits #{}))
+                                                           (-> bg-state
+                                                             (assoc :game-state :ready)))
       (= :ready game-state) bg-state
       :else (let [explosions (ufos/detect-explosions ufos missiles)
                   ufos-exploded (into #{} (map first explosions))
@@ -107,7 +153,7 @@
 
 (defn draw-state [{:keys [score tank missiles bombs ufos hits tank-hits stars lifes game-state mute bgmusic bang shoot hiss]
                    :as state}]
-  (.log js/console (pr-str (:game-state state)))
+  ;(.log js/console (pr-str (:game-state state)))
   (if mute
     (if (.playing bgmusic)
       (.pause bgmusic))
@@ -127,11 +173,11 @@
     (ufos/draw-explosion! hit bang))
   (doseq [hit tank-hits]
     (tank/draw-explosion! hit tank hiss))
-  (if (or (= :game-over game-state) (= :ready game-state))
-    (do
-      (helpers/draw-game-over!)
-      (.fade bgmusic 1, 0, 1000))))
-;  (if (not (empty? tank-hits))))
+  (if (not (= :playing game-state)) (.fade bgmusic 1, 0, 1000))
+  (cond
+    (= :game-over game-state) (helpers/draw-game-over! game-over-img)
+    (= :won game-state) (helpers/draw-game-over! won-img)
+    (= :ready game-state) (helpers/draw-game-over! ready-img)))
 
 
 ; this function is called in index.html

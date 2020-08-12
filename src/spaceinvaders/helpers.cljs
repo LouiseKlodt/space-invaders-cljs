@@ -31,29 +31,13 @@
   (q/text (str "SCORE <" score ">") margin margin)
   (q/pop-style))
 
-(defn game-over-img []
-  (q/push-style)
-  ; (let [flash (mod (quot (q/frame-count) 10) 2)
-  ;       bg-color (nth [:dark-blue :red] flash)]
-  ;   (q/fill (bg-color colors)))
-  (q/fill 0)
-  (q/rect 0 0 1 1)
-  (q/stroke 255)
-  (q/fill 255)
-  (q/text-size 0.24)
-  (q/text "GAME OVER" 0.08 0.3)
-  (q/text-size 0.12)
-  (q/text "PRESS ANY KEY" 0.2 0.51)
-  (q/text "TO PLAY AGAIN" 0.2 0.71)
-  (q/pop-style))
-
-(defn draw-game-over! []
+(defn draw-game-over! [draw-fn]
   (q/push-style)
   (let [cx (* 0.2 world-width)
         cy (* 0.14 world-width)
         w (* 0.6 world-width)
         h (* 0.4 world-height)]
-    ((qt/at cx cy (qt/in w h game-over-img)))
+    ((qt/at cx cy (qt/in w h draw-fn)))
     (q/no-fill)
     (q/stroke-weight 4)
     (apply q/stroke (:guppie-green colors))
@@ -66,6 +50,11 @@
   (q/stroke-weight 2)
   (q/line 0.0 hbar-menu world-width hbar-menu)
   (q/pop-style))
+
+(defn draw-flash [freq]
+  (let [flash (mod (quot (q/frame-count) freq) 2)
+        bg-color (nth [:dark-blue :red] flash)]
+   (q/fill (bg-color colors))))
 
 ; (defn alien-img []
 ;   (q/push-style)
