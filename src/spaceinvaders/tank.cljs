@@ -52,11 +52,13 @@
 
 (defn tank-collisions [items w-item h-item {xt :x}]
   "Returns list of items which hit the tank"
-  (into #{} (filter #(collision? [xt yt] % wt ht w-item h-item) items)))
+   (into #{} (filter #(collision? [xt yt] % wt ht w-item h-item) items)))
 
-(defn draw-explosion! [tank]
+(defn draw-explosion! [{:keys [x y counter] :as hit} tank hiss]
   (q/push-style)
+  (if (zero? counter) (.play hiss))
   (let [flash (mod (quot (q/frame-count) 5) 2)
         tank-color (nth [:light-gray :red] flash)]
     ((qt/at (:x tank) yt (qt/in wt ht (tank-img (colors tank-color))))))
+
   (q/pop-style))

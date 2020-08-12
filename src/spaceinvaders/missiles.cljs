@@ -24,7 +24,6 @@
   (q/push-style)
   (apply q/fill (:light-gray colors))
   (doseq [[x y] missiles]
-    ; (.play shoot)
     ((qt/at (- (+ x (/ wt 2)) (/ wm 2)) y (qt/in wm wm missile-img))))
   (q/pop-style))
 

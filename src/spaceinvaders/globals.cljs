@@ -7,6 +7,7 @@
 (def offset 4)
 (def frame-rate 30)
 (def hbar-menu (- world-height margin offset))
+(def max-score 100)
 
 ; tank
 (def wt 42)

@@ -5,7 +5,7 @@
             [clojure.string :as str]
             [clojure.set :as set]
             [cljsjs.howler]
-            [spaceinvaders.globals :refer [yt wb max-missiles size-ufo
+            [spaceinvaders.globals :refer [yt wb max-missiles size-ufo max-score
                                            colors world-height world-width margin frame-rate]]
             [spaceinvaders.stars :as stars]
             [spaceinvaders.ufos :as ufos]
@@ -29,6 +29,7 @@
    :bgmusic (js/themesound)
    :bang (js/bangsound)
    :shoot (js/shootsound)
+   :hiss (js/hissingsound)
    :mute true})
 
 (defn setup []
@@ -42,10 +43,15 @@
                      :as state}]
   (let [bg-state (update state :stars stars/move-stars world-height)]
     (cond
+      (and (= :playing game-state) (= max-score score)) (assoc bg-state :game-state :won)
       (and (= :playing game-state) (zero? lifes)) (assoc bg-state :game-state :game-over :state-counter 0)
       (= :game-over game-state) (if (< state-counter 90)
-                                  (update bg-state :state-counter inc)
-                                  (assoc bg-state :game-state :ready))
+                                  (-> bg-state
+                                    (update :state-counter inc)
+                                    (assoc :tank-hits #{}))
+                                  (-> bg-state
+                                    (assoc :game-state :ready)))
+
       (= :ready game-state) bg-state
       :else (let [explosions (ufos/detect-explosions ufos missiles)
                   ufos-exploded (into #{} (map first explosions))
@@ -77,7 +83,7 @@
 
 (defn key-handler [{:keys [tank missiles game-state bgmusic bang shoot] :as state} {key :key key-code :key-code}]
  (cond
-   (= :game-over game-state) (update state :mute true)
+   (= :game-over game-state) (assoc state :mute true)
    (= :ready game-state) (cond
                            (= :q key) (q/exit)
                            (= :s key) (update state :mute not)
@@ -95,31 +101,13 @@
               (= up key-code) (update-in state [:tank :speed] tank/speed-up)
               (= down key-code) (update-in state [:tank :speed] tank/speed-down)
               (= :space key) (if (< (count missiles) max-missiles)
-                               (update state :missiles conj [(:x tank) yt])
+                               (do (.play shoot) (update state :missiles conj [(:x tank) yt]))
                                state)
               :else state))))
 
-; (defn pause-all-music! []
-;   (do
-;     (.pause bgmusic)
-;     (.pause bang)
-;     (.pause shoot)))
-;
-; (defn play-all-music! []
-;   (do
-;     (.play bgmusic)
-;     (.play bang)
-;     (.play shoot)))
-
-(defn draw-state [{:keys [score tank missiles bombs ufos hits tank-hits stars lifes game-state mute bgmusic bang shoot]
+(defn draw-state [{:keys [score tank missiles bombs ufos hits tank-hits stars lifes game-state mute bgmusic bang shoot hiss]
                    :as state}]
-  ; (if mute
-  ;   (if (and bgmusic (.playing bgmusic))
-  ;     (.pause bgmusic)
-  ;     (if (and bgmusic (not (.playing bgmusic)))
-  ;       (.play bgmusic))))
-  (.log js/console (pr-str (:mute state)))
-  (.log js/console (pr-str "playing: " (.playing bgmusic)))
+  (.log js/console (pr-str (:game-state state)))
   (if mute
     (if (.playing bgmusic)
       (.pause bgmusic))
@@ -137,11 +125,14 @@
   (tank/draw-tank-menu! lifes)
   (doseq [hit hits]
     (ufos/draw-explosion! hit bang))
+  (doseq [hit tank-hits]
+    (tank/draw-explosion! hit tank hiss))
   (if (or (= :game-over game-state) (= :ready game-state))
     (do
       (helpers/draw-game-over!)
-      (.fade bgmusic 1, 0, 1000)))
-  (if (not (empty? tank-hits)) (tank/draw-explosion! tank)))
+      (.fade bgmusic 1, 0, 1000))))
+;  (if (not (empty? tank-hits))))
+
 
 ; this function is called in index.html
 (defn ^:export run-sketch []
