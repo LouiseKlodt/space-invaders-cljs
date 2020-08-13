@@ -2,7 +2,7 @@
 
 A [Space Invaders](https://en.wikipedia.org/wiki/Space_Invaders) inspired retro shooter game in Clojure using [Quil](http://quil.info/).
 
-![Space Invaders](resources/public/static/spaceinvaders-in-action.png)
+<img src="resources/public/static/spaceinvaders.png"  style="float: left; margin: 10px; width=60%;" />
 
 ## Usage
 
