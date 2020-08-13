@@ -29,12 +29,14 @@
 (def wb (* 0.2 size-ufo))
 (def max-bombs 1)
 
-(def colors {:guppie-green [0, 204, 50]
-             :red [195, 0, 0]
+(def colors {:guppie-green [0, 231, 24];[0, 204, 50]
+             :red [203, 2, 3];[195, 0, 0]
              :blue [26, 129, 236]
-             :light-gray [190, 184, 175]
+             :light-gray [233, 233, 233];[190, 184, 175]
              :yellow-rose [254, 240, 1]
              :electric-red [240, 5, 5]
              :rose-garnet [151, 2, 70]
-             :aqua [1, 255, 255]
-             :dark-blue [0, 23, 45]})
+             :aqua [143, 255, 252] ;143, 255, 252
+             :dark-blue [0, 23, 45]
+             :black [0 0 0]
+             :pink [255, 93, 184]})

@@ -34,7 +34,8 @@
 
 (defn setup []
   (q/frame-rate frame-rate)
-  (apply q/background (:dark-blue colors))
+  (q/fill 0)
+  ;(apply q/background (:dark-blue colors))
   (q/text-font "VT323-Regular")
   (q/text-size 24)
   (init-state!))
@@ -109,7 +110,8 @@
       (.pause bgmusic))
     (if (not (.playing bgmusic))
       (.play bgmusic)))
-  (apply q/background (:dark-blue colors))
+  ;(apply q/background (:dark-blue colors))
+  (q/background 0)
   (stars/draw-stars! stars)
   (missiles/draw-missiles! missiles shoot)
   (bombs/draw-bombs! bombs)

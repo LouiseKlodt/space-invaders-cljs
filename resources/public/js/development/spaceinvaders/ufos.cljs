@@ -39,7 +39,7 @@
   (q/stroke-weight 0.5)
   (q/stroke (:dark-blue colors))
   (let [blink-time 4
-        cs [:yellow-rose :electric-red :aqua :rose-garnet]
+        cs [:electric-red :aqua]
         phase (mod (quot counter blink-time) (count cs))
         next-color (colors (cs phase))]
     ((qt/at x y (qt/in size-ufo size-ufo (ufo-img next-color)))))

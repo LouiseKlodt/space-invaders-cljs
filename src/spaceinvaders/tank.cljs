@@ -37,18 +37,17 @@
   (q/push-style)
   (q/no-stroke)
   (q/fill 255)
-  ((qt/at (:x tank) yt (qt/in wt ht (tank-img (:light-gray colors)))))
+  ((qt/at (:x tank) yt (qt/in wt ht (tank-img (:aqua colors)))))
   (q/pop-style))
 
 (defn draw-tank-menu! [n-lifes]
   (let [y-items (+ hbar-menu 22)]
-    (q/fill 255)
+    (apply q/fill (:aqua colors))
     (q/no-stroke)
     (q/text (str n-lifes) margin y-items)
-    (apply q/fill (:light-gray colors))
     (doseq [i (range n-lifes)]
       (let [w 30 gap 10 x0 (* 2 margin) y0 (- y-items (/ w 2))]
-        ((qt/at (+ x0 (* i (+ w gap))) y0 (qt/in w (/ w 2) tank-img)))))))
+        ((qt/at (+ x0 (* i (+ w gap))) y0 (qt/in w (/ w 2) (tank-img (:aqua colors)))))))))
 
 (defn tank-collisions [items w-item h-item {xt :x}]
   "Returns list of items which hit the tank"
