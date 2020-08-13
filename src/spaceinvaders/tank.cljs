@@ -59,5 +59,4 @@
   (let [flash (mod (quot (q/frame-count) 5) 2)
         tank-color (nth [:light-gray :red] flash)]
     ((qt/at (:x tank) yt (qt/in wt ht (tank-img (colors tank-color))))))
-
   (q/pop-style))

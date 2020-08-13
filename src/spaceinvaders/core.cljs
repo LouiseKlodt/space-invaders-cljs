@@ -35,7 +35,6 @@
 (defn setup []
   (q/frame-rate frame-rate)
   (q/fill 0)
-  ;(apply q/background (:dark-blue colors))
   (q/text-font "VT323-Regular")
   (q/text-size 24)
   (init-state!))
@@ -44,7 +43,8 @@
                      :as state}]
   (let [bg-state (update state :stars stars/move-stars world-height)]
     (cond
-      (and (= :playing game-state) (= 10 score)) (assoc bg-state :game-state :won :state-counter 0)
+      (= :ready game-state) bg-state
+      (and (= :playing game-state) (= max-score score)) (assoc bg-state :game-state :won :state-counter 0)
       (and (= :playing game-state) (zero? lifes)) (assoc bg-state :game-state :game-over :state-counter 0)
       (or (= :won game-state) (= :game-over game-state)) (if (< state-counter 90)
                                                            (-> bg-state
@@ -53,7 +53,6 @@
                                                              (assoc :hits #{}))
                                                            (-> bg-state
                                                              (assoc :game-state :ready)))
-      (= :ready game-state) bg-state
       :else (let [explosions (ufos/detect-explosions ufos missiles)
                   ufos-exploded (into #{} (map first explosions))
                   ufos-escaped (helpers/escaped ufos)
@@ -110,7 +109,6 @@
       (.pause bgmusic))
     (if (not (.playing bgmusic))
       (.play bgmusic)))
-  ;(apply q/background (:dark-blue colors))
   (q/background 0)
   (stars/draw-stars! stars)
   (missiles/draw-missiles! missiles shoot)

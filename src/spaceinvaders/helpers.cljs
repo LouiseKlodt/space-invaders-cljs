@@ -65,9 +65,6 @@
   (draw-flash 10)
   (q/text-size 0.22)
   (q/text "GAME OVER!" 0.09 0.5)
-  ;(q/text-size 0.1)
-  ; (q/text "THE UFOS HAVE TAKEN" 0.08 0.55)
-  ; (q/text "OVER THE PLANET!" 0.08 0.7)
   (q/pop-style))
 
 (defn game-ready-img []
@@ -92,9 +89,8 @@
   (q/text-size 0.22)
   (q/text "WELL DONE!" 0.08 0.4)
   (q/text-size 0.1)
-  ; (q/text "YOU HAVE SUCCESSFULLY" 0.08 0.55)
-  ; (q/text "DEFENDED THE PLANET!" 0.08 0.7)
   (q/pop-style))
+
 ; (defn alien-img []
 ;   (q/push-style)
 ;   (apply q/fill (:red colors))

@@ -26,12 +26,10 @@
       ((qt/at x y (qt/in w w bomb-img)))))
   (q/pop-style))
 
-; Ufos -> Bomb
 (defn new-bomb [ufos]
   (let [[x y] (rand-nth (vec ufos))]
     [(+ size-ufo2 x) (+ size-ufo2 y)]))
 
-; Bombs, Ufos -> Bombs
 (defn update-bombs [bombs ufos]
   "Possibly adds new bomb to bombs, and moves each bomb down by dy."
   (let [freq 1
