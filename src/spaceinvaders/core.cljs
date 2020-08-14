@@ -35,7 +35,7 @@
 (defn setup []
   (q/frame-rate frame-rate)
   (q/fill 0)
-  (q/text-font "VT323-Regular")
+  (q/text-font "VT323")
   (q/text-size 24)
   (init-state!))
 
