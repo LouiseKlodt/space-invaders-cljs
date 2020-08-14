@@ -8,7 +8,7 @@ pom.xml.asc
 /.lein-*
 /.nrepl-port
 figwheel_server.log
- resources/public/js/*
+resources/public/js
 resources/public/.DS_Store
 .rebel_readline_history
 	
